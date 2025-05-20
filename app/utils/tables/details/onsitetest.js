@@ -1,0 +1,171 @@
+const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const d = require("../../reportData.json");
+const {
+  getCell,
+  getDynamicTable,
+  getPhotosTable,
+  getCleanedString,
+} = require("../../helper");
+const getDataSheets = require("../datasheets");
+
+const empty_paragraph = new Paragraph("");
+const sn = 2;
+const desp =
+  "Randomly select samples, proceed tests on site to verify some important characteristics of product, report findings and conformities.";
+const subTitle = d.InspectionCategories[sn].CategoryName;
+const result = d.InspectionCategories[sn].Result;
+const bm = getCleanedString(subTitle).toLowerCase();
+const sap = d.InspectionCategories[sn].SpecialAttention;
+const refer = d.InspectionCategories[sn].ReferenceNote;
+const checkLists = d.InspectionCategories[sn].checklist;
+const dataSheets = d.InspectionCategories[sn].datasheet;
+
+function getCheckLists() {
+  return checkLists.map((item, index) => {
+    return new TableRow({
+      children: [
+        getCell({
+          title: `${sn + 1}.${index + 1}`,
+          alignment: "center",
+        }),
+        getCell({
+          title: item.name,
+          alignment: "center",
+        }),
+        getCell({
+          title: item.Criteria,
+          alignment: "center",
+        }),
+        getCell({
+          title: item.SampleSize,
+          alignment: "center",
+        }),
+        getCell({
+          title: item.Result,
+          alignment: "center",
+        }),
+      ],
+    });
+  });
+}
+
+function getOSTTable() {
+  return new Table({
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: {
+      top: 50,
+      bottom: 50,
+      left: 100,
+      right: 100,
+    },
+    rows: [
+      new TableRow({
+        children: [
+          getCell({
+            title: `${sn + 1}. ${subTitle}`,
+            cellType: "subheader",
+            alignment: "left",
+            bookmark: bm,
+            cols: 3,
+          }),
+          getCell({
+            title: result,
+            cols: 2,
+            alignment: "center",
+            style: "red_mark",
+          }),
+        ],
+      }),
+      new TableRow({
+        children: [
+          getCell({
+            title: "Description",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+          getCell({ title: desp, cols: 4, gray_bg: true }),
+        ],
+      }),
+      new TableRow({
+        children: [
+          getCell({
+            title: "No.",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+          getCell({
+            title: "Check Point",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+          getCell({
+            title: "Criteria",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+          getCell({
+            title: "Samples",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+          getCell({
+            title: "Result",
+            cellType: "normal",
+            alignment: "center",
+            gray_bg: true,
+          }),
+        ],
+      }),
+
+      ...getCheckLists(),
+    ],
+  });
+}
+
+let OST_Tables = [
+  getOSTTable(),
+  empty_paragraph,
+  getPhotosTable(["", "", "", ""]),
+];
+
+if (sap?.length > 0) {
+  OST_Tables.push(empty_paragraph);
+  OST_Tables.push(
+    getDynamicTable({
+      category: bm + "_sap",
+      prefix: sn + 1,
+      title: "Special Attention Point for On Site Test",
+      data: sap,
+    })
+  );
+  OST_Tables.push(empty_paragraph);
+  OST_Tables.push(getPhotosTable(["", "", "", ""]));
+}
+
+if (refer?.length > 0) {
+  OST_Tables.push(empty_paragraph);
+  OST_Tables.push(
+    getDynamicTable({
+      category: bm + "_refer",
+      prefix: sn + 1,
+      title: "Reference Note for On Site Test",
+      data: refer,
+    })
+  );
+  OST_Tables.push(empty_paragraph);
+  OST_Tables.push(getPhotosTable(["", "", "", ""]));
+}
+
+if (dataSheets?.length > 0) {
+  OST_Tables = [...OST_Tables, ...getDataSheets(dataSheets)];
+}
+
+module.exports = OST_Tables;
