@@ -21,18 +21,16 @@ function getDataRows() {
     const refer_links = [];
 
     item.SpecialAttention.forEach((ele, idx) => {
-      const numbering = `${SerialNo}.${idx + 1}`;
       sap_links.push({
-        title: numbering,
-        target: for_bookmark + "_sap_" + numbering,
+        title: `${SerialNo}.${idx + 1}`,
+        target: for_bookmark + `_sap_${SerialNo}_${idx + 1}`,
       });
     });
 
     item.ReferenceNote.forEach((ele, idx) => {
-      const numbering = `${SerialNo}.${idx + 1}`;
       refer_links.push({
-        title: numbering,
-        target: for_bookmark + "_refer_" + numbering,
+        title: `${SerialNo}.${idx + 1}`,
+        target: for_bookmark + `_refer_${SerialNo}_${idx + 1}`,
       });
     });
 
@@ -50,11 +48,13 @@ function getDataRows() {
           cellType: "normal",
           alignment: "center",
           links: sap_links,
+          target: for_bookmark,
         }),
         getLinkCell({
           cellType: "normal",
           alignment: "center",
           links: refer_links,
+          target: for_bookmark,
         }),
       ],
     });

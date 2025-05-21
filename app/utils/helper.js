@@ -173,7 +173,6 @@ function getLinkCell(para) {
       multiple_links.push(new TextRun(" "));
     });
   }
-
   return new TableCell({
     children: [
       new Paragraph({
@@ -247,7 +246,7 @@ function getDynamicTable(para) {
             new Paragraph({
               children: [
                 new Bookmark({
-                  id: `${para.category}_${numbering}`,
+                  id: `${para.category}_${para.prefix}_${index + 1}`,
                   children: [new TextRun({ text: numbering })],
                 }),
               ],
