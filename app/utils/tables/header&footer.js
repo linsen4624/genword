@@ -14,6 +14,7 @@ const {
   BorderStyle,
   ShadingType,
   InternalHyperlink,
+  convertInchesToTwip,
 } = require("docx");
 const fs = require("fs");
 const { Colors } = require("../styling");
@@ -26,11 +27,11 @@ const signature = new Table({
   },
   rows: [
     new TableRow({
-      height: { value: 700, rule: "exact" },
+      height: { value: convertInchesToTwip(0.47), rule: "exact" },
       children: [
         new TableCell({
           width: {
-            size: 4700,
+            size: convertInchesToTwip(3.26),
             type: WidthType.DXA,
           },
           verticalAlign: VerticalAlign.CENTER,
@@ -48,8 +49,8 @@ const signature = new Table({
         }),
         new TableCell({
           width: {
-            size: 0,
-            type: WidthType.AUTO,
+            size: convertInchesToTwip(1.97),
+            type: WidthType.DXA,
           },
           verticalAlign: VerticalAlign.CENTER,
           children: [
@@ -61,7 +62,7 @@ const signature = new Table({
         }),
         new TableCell({
           width: {
-            size: 1000,
+            size: convertInchesToTwip(0.69),
             type: WidthType.DXA,
           },
           verticalAlign: VerticalAlign.CENTER,
@@ -74,7 +75,7 @@ const signature = new Table({
         }),
         new TableCell({
           width: {
-            size: 1500,
+            size: convertInchesToTwip(1.09),
             type: WidthType.DXA,
           },
           verticalAlign: VerticalAlign.CENTER,
@@ -183,11 +184,11 @@ const first_page_header = new Table({
   },
   rows: [
     new TableRow({
-      height: { value: 1200, rule: "exact" },
+      height: { value: convertInchesToTwip(0.79), rule: "atLeast" },
       children: [
         new TableCell({
           width: {
-            size: 3000,
+            size: convertInchesToTwip(2.07),
             type: WidthType.DXA,
           },
           children: [
@@ -209,7 +210,7 @@ const first_page_header = new Table({
         }),
         new TableCell({
           width: {
-            size: 4000,
+            size: convertInchesToTwip(2.66),
             type: WidthType.DXA,
           },
           children: [
@@ -222,6 +223,10 @@ const first_page_header = new Table({
           verticalAlign: VerticalAlign.CENTER,
         }),
         new TableCell({
+          width: {
+            size: convertInchesToTwip(2.28),
+            type: WidthType.DXA,
+          },
           children: [
             new Paragraph({
               text: "Report No: " + d.ReportNo,

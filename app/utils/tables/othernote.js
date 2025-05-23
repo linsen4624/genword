@@ -1,6 +1,7 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const { Table, WidthType, Paragraph } = require("docx");
 const d = require("../reportData.json");
-const { getCell, getPhotosTable } = require("../helper");
+const { getRow, getCell, getPhotosTable } = require("../helper");
+const { table_config } = require("../styling");
 
 const empty_paragraph = new Paragraph("");
 const desp =
@@ -8,7 +9,7 @@ const desp =
 
 function getNoteLists() {
   return d.OtherNotes.map((item, index) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({
           title: `10.${index + 1}`,
@@ -28,14 +29,9 @@ function getONTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "10. Other Note",
@@ -45,7 +41,7 @@ function getONTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Description",
@@ -56,7 +52,7 @@ function getONTable() {
           getCell({ title: desp, gray_bg: true }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "No.",

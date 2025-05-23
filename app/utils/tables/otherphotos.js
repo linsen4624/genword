@@ -1,6 +1,7 @@
 const { Table, TableRow, WidthType, Paragraph } = require("docx");
 // const d = require("../reportData.json");
 const { getCell, getPhotosTable } = require("../helper");
+const { table_config } = require("../styling");
 
 const empty_paragraph = new Paragraph("");
 
@@ -10,14 +11,10 @@ function getOPTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
       new TableRow({
+        height: table_config.rowHeight,
         children: [
           getCell({
             title: "11. Other Photos",

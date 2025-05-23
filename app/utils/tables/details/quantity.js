@@ -1,11 +1,13 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const { Table, WidthType, Paragraph, convertInchesToTwip } = require("docx");
 const d = require("../../reportData.json");
 const {
+  getRow,
   getCell,
   getDynamicTable,
   getPhotosTable,
   getCleanedString,
 } = require("../../helper");
+const { table_config } = require("../../styling");
 
 const empty_paragraph = new Paragraph("");
 const sn = 0;
@@ -38,7 +40,7 @@ function getPOItemRows() {
     Total_Values.SampleCartonCounts += item.SampleCartonCounts;
     Total_Values.SampleSize += item.SampleSize;
 
-    return new TableRow({
+    return getRow({
       children: [
         getCell({
           title: item.PONo,
@@ -87,16 +89,12 @@ function getQuantityTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(5.31),
             title: `${sn + 1}. ${subTitle}`,
             cellType: "subheader",
             alignment: "left",
@@ -104,6 +102,7 @@ function getQuantityTable() {
             cols: 7,
           }),
           getCell({
+            width: convertInchesToTwip(1.69),
             title: result,
             cols: 2,
             alignment: "center",
@@ -111,18 +110,24 @@ function getQuantityTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(0.88),
             title: "Description",
             cellType: "normal",
             alignment: "center",
             gray_bg: true,
           }),
-          getCell({ title: desp, cols: 8, gray_bg: true }),
+          getCell({
+            width: convertInchesToTwip(6.12),
+            title: desp,
+            cols: 8,
+            gray_bg: true,
+          }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "P.O. No.",
@@ -167,7 +172,7 @@ function getQuantityTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `(${d.ProductUnit})`,
@@ -216,7 +221,7 @@ function getQuantityTable() {
 
       ...getPOItemRows(),
 
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Total",

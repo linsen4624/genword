@@ -1,12 +1,14 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const { Table, WidthType, Paragraph, BorderStyle } = require("docx");
 const d = require("../../reportData.json");
 const {
+  getRow,
   getCell,
   getDynamicTable,
   getPhotosTable,
   getCleanedString,
 } = require("../../helper");
 const getDataSheets = require("../datasheets");
+const { table_config } = require("../../styling");
 
 const empty_paragraph = new Paragraph("");
 const sn = 7;
@@ -22,15 +24,33 @@ const dataSheets = d.InspectionCategories[sn].datasheet;
 
 function getCheckLists() {
   return checkLists.map((item, index) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({
           title: `${sn + 1}.${index + 1}`,
           alignment: "center",
         }),
         getCell({
+          borders: {
+            right: {
+              style: BorderStyle.NONE,
+              size: 0,
+              color: "FFFFFF",
+            },
+          },
           title: item.name,
-          alignment: "center",
+          alignment: "left",
+        }),
+        getCell({
+          borders: {
+            left: {
+              style: BorderStyle.NONE,
+              size: 0,
+              color: "FFFFFF",
+            },
+          },
+          title: item.SampleSize,
+          alignment: "left",
         }),
         getCell({
           title: item.Result,
@@ -47,21 +67,16 @@ function getSMTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `${sn + 1}. ${subTitle}`,
             cellType: "subheader",
             alignment: "left",
             bookmark: bm,
-            cols: 2,
+            cols: 3,
           }),
           getCell({
             title: result,
@@ -70,7 +85,7 @@ function getSMTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Description",
@@ -78,10 +93,10 @@ function getSMTable() {
             alignment: "center",
             gray_bg: true,
           }),
-          getCell({ title: desp, cols: 2, gray_bg: true }),
+          getCell({ title: desp, cols: 3, gray_bg: true }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "No.",
@@ -93,6 +108,7 @@ function getSMTable() {
             title: "Check Point",
             cellType: "normal",
             alignment: "center",
+            cols: 2,
             gray_bg: true,
           }),
           getCell({

@@ -7,7 +7,7 @@ const {
   first_page_header,
 } = require("../utils/tables/header&footer");
 const { styling } = require("../utils/styling");
-const getInfoTable = require("../utils/tables/information");
+const information = require("../utils/tables/information");
 const geSummaryTable = require("../utils/tables/summary");
 const details = require("../utils/tables/details");
 const othernote = require("../utils/tables/othernote");
@@ -30,8 +30,8 @@ class GenerateWordController extends Controller {
                 margin: {
                   top: 1000,
                   bottom: 1000,
-                  left: 980,
-                  right: 980,
+                  left: 900, // 左右边距为900，则宽度为100%的表格，实际宽度为17.8cm
+                  right: 900, // 左右边距为900，则宽度为100%的表格，实际宽度为17.8cm
                   header: 1000,
                   footer: 1000,
                 },
@@ -52,7 +52,7 @@ class GenerateWordController extends Controller {
 
             children: [
               new Paragraph(""),
-              getInfoTable(),
+              ...information,
               new Paragraph(""),
               geSummaryTable(),
               new Paragraph(""),

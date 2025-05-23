@@ -14,15 +14,15 @@
     "InspectionBasis": "HF-GID-MT-GWI-HG-HG-06-116-F-200505FZ0008",
     "ProductPhotos": [
         {
-            "url": "./00. First page photos(No naming required)/photo1.jpg",
+            "url": "/photo/00. First page photos(No naming required)/24 Item Decor books.jpg",
             "description": ""
         },
         {
-            "url": "./00. First page photos(No naming required)/photo2.jpg",
+            "url": "/photo/00. First page photos(No naming required)/25 Item Decor books.jpg",
             "description": ""
         }
     ],
-    "SupervisorSignPhotoUrl": "./00. First page photos(No naming required)/photo2.jpg",
+    "SupervisorSignPhotoUrl": "/photo/SupervisorSignPhoto.jpg",
     "ApprovedDate": "2025-03-31",
     "samplingStandard": "ISO2859.1",
     "samplingPlan": "Single, Normal",
@@ -151,37 +151,19 @@
             "checklist": [],
             "datasheet": [],
             "SpecialAttention": [],
-            "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "SpecialAttentionPhotos": [],
             "ReferenceNote": [],
-            "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "ReferenceNotePhotos": [],
             "PhotoGroup": [
                 {
                     "name": "",
                     "photos": [
                         {
-                            "url": "https://example.com/1.jpg",
+                            "url": "/photo/01. Quantity & Warehouse & Storage(No naming required)/IMG_20250331_100507.jpg",
                             "description": "1"
                         },
                         {
-                            "url": "https://example.com/2.jpg",
+                            "url": "/photo/01. Quantity & Warehouse & Storage(No naming required)/IMG_20250331_100519.jpg",
                             "description": "2"
                         }
                     ]
@@ -209,38 +191,24 @@
             ],
             "datasheet": [],
             "SpecialAttention": [],
-            "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "SpecialAttentionPhotos": [],
             "ReferenceNote": [],
-            "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "ReferenceNotePhotos": [],
             "PhotoGroup": [
                 {
-                    "name": "Decor books",
+                    "name": "01 Item Decor books",
                     "photos": [
                         {
-                            "url": "https://example.com/crack mark on box-ma 1.jpg",
+                            "url": "/photo/02. Workmanship（No naming required)/01 Item Decor books/1 crack mark on box-ma/1 crack mark on box-ma 1.jpg",
                             "description": "crack mark on box-ma 1"
                         },
                         {
-                            "url": "https://example.com/dent mark on book-mi 1.jpg",
+                            "url": "/photo/02. Workmanship（No naming required)/01 Item Decor books/2 dent mark on book-mi/2 dent mark on book-mi 1.jpg",
                             "description": "dent mark on book-mi 1"
+                        },
+                        {
+                            "url": "/photo/02. Workmanship（No naming required)/01 Item Decor books/2 dent mark on book-mi/2 dent mark on book-mi 2.jpg",
+                            "description": "dent mark on book-mi 2"
                         }
                     ]
                 }
@@ -263,6 +231,7 @@
                     "code": "TGS004",
                     "name": "Mass per unit area of material",
                     "Criteria": "Mass per unit area of material, by weighting .... ",
+                    "SampleSize": "6",
                     "mesurementType": "qualitative",
                     "mesurementData": [],
                     "Result": "Conformed"
@@ -271,6 +240,7 @@
                     "code": "TGS005",
                     "name": "tape test ",
                     "Criteria": "Paste and cover printing on product surface .... ",
+                    "SampleSize": "9",
                     "mesurementType": "qualitative",
                     "mesurementData": [],
                     "Result": "Conformed"
@@ -280,27 +250,18 @@
             "SpecialAttention": [
                 "The mass per unit area of paper was not conducted because the product was not allowed to be destroyed. "
             ],
-            "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "SpecialAttentionPhotos": [],
             "ReferenceNote": [
                 "For tape test of logo, the surface printing was slightly peeled off, as photos:  "
             ],
             "ReferenceNotePhotos": [
                 {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
+                    "url": "/photo/03. On Site Test（naming required)/Reference Note/1 3.1 after test.jpg",
+                    "description": "1 3.1 after test"
                 },
                 {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
+                    "url": "/photo/03. On Site Test（naming required)/Reference Note/2 3.1 after test.jpg",
+                    "description": "2 3.1 after test"
                 }
             ],
             "PhotoGroup": [],
@@ -366,15 +327,14 @@
                     "type": "ShoesDataSheet",
                     "datas": [
                         {
-                            "ItemNo": "Decor books ",
                             "photos": [
                                 {
-                                    "url": "https://example.com/photo1.jpg",
-                                    "description": "photo1"
+                                    "url": "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154150.jpg",
+                                    "description": "1"
                                 },
                                 {
-                                    "url": "https://example.com/photo2.jpg",
-                                    "description": "photo2"
+                                    "url": "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154159.jpg",
+                                    "description": "2"
                                 }
                             ]
                         },
@@ -382,12 +342,12 @@
                             "ItemNo": "Decor books AA",
                             "photos": [
                                 {
-                                    "url": "https://example.com/photo1.jpg",
-                                    "description": "photo1"
+                                    "url": "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154150.jpg",
+                                    "description": "1"
                                 },
                                 {
-                                    "url": "https://example.com/photo2.jpg",
-                                    "description": "photo2"
+                                    "url": "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154159.jpg",
+                                    "description": "2"
                                 }
                             ]
                         }
@@ -397,6 +357,10 @@
                     "name": "WithPicDataSheet XXXX",
                     "type": "WithPicDataSheet",
                     "ItemNo": "Decor books ",
+                    "photo": {
+                        "url": "/photo/03. On Site Test（naming required)/img3.png",
+                        "description": "2"
+                    },
                     "datas": [
                         {
                             "Checkpoint": "Decor books ",
@@ -417,25 +381,16 @@
                 "No excess product for thickness of grey board test during inspection",
                 "ProductWeight SAP content"
             ],
-            "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "SpecialAttentionPhotos": [],
             "ReferenceNote": [],
             "ReferenceNotePhotos": [
                 {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
+                    "url": "/photo/03. On Site Test（naming required)/Reference Note/1 3.1 after test.jpg",
+                    "description": "1 3.1 after test"
                 },
                 {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
+                    "url": "/photo/03. On Site Test（naming required)/Reference Note/2 3.1 after test.jpg",
+                    "description": "2 3.1 after test"
                 }
             ],
             "PhotoGroup": [],
@@ -591,25 +546,16 @@
             ],
             "SpecialAttentionPhotos": [
                 {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
+                    "url": "/photo/07.  Product Label & Marking（No naming required)/Special Attention Point/1 7.1 spec.jpg",
+                    "description": "1 7.1 spec"
                 },
                 {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
+                    "url": "/photo/07.  Product Label & Marking（No naming required)/Special Attention Point/2 7.1 actually found.jpg",
+                    "description": "2 7.1 actually found"
                 }
             ],
             "ReferenceNote": [],
-            "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
-            ],
+            "ReferenceNotePhotos": [],
             "PhotoGroup": []
         },
         {
@@ -770,27 +716,22 @@
         "The inspection was conducted in accordance with the AQL standard. The inspection result is based on the sample size and the defects found during the inspection. The final decision on acceptance or rejection of the shipment should be made by the client.",
         "The inspection was conducted in accordance with the AQL standard. The inspection result is based on the sample size and the defects found during the inspection. The final decision on acceptance or rejection of the shipment should be made by the client."
     ],
-    "OtherNotesPhotos": [
-        {
-            "url": "https://example.com/photo1.jpg",
-            "description": "photo1"
-        },
-        {
-            "url": "https://example.com/photo2.jpg",
-            "description": "photo2"
-        }
-    ],
+    "OtherNotesPhotos": [],
     "OtherPhotoGroup": [
         {
             "name": "Decor books",
             "photos": [
                 {
-                    "url": "https://example.com/crack mark on box-ma 1.jpg",
-                    "description": "crack mark on box-ma 1"
+                    "url": "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/1 Item Decor books.jpg",
+                    "description": "1 Item Decor books"
                 },
                 {
-                    "url": "https://example.com/dent mark on book-mi 1.jpg",
-                    "description": "dent mark on book-mi 1"
+                    "url": "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/10 Item Decor books.jpg",
+                    "description": "10 Item Decor books"
+                },
+                {
+                    "url": "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/11 Item Decor books.jpg",
+                    "description": "11 Item Decor books"
                 }
             ]
         },
@@ -798,19 +739,19 @@
             "name": "test",
             "photos": [
                 {
-                    "url": "https://example.com/crack mark on box-ma 1.jpg",
-                    "description": "crack mark on box-ma 1"
+                    "url": "/photo/11. Other photos（Naming or no naming required)/02 test/1 barcode readability check.jpg",
+                    "description": "1 barcode readability check"
                 },
                 {
-                    "url": "https://example.com/dent mark on book-mi 1.jpg",
-                    "description": "dent mark on book-mi 1"
+                    "url": "/photo/11. Other photos（Naming or no naming required)/02 test/2 QR code check.jpg",
+                    "description": "2 QR code check"
                 }
             ]
         }
     ],
     "AccountManagers": [
         {
-            "photo": "https://example.com/photo2.jpg",
+            "photo": "/photo/Eunice.jpg",
             "name": "Eunice Wu",
             "title": "Account Manager",
             "email": "wuyanmei@hqts.com",
@@ -818,7 +759,7 @@
             "mobile": "+31 6 12345678"
         },
         {
-            "photo": "https://example.com/photo2.jpg",
+            "photo": "/photo/vicky.jpg",
             "name": "Vicky Wang",
             "title": "Dept Manager",
             "email": "vicky@hqts.com",

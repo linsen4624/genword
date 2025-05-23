@@ -1,21 +1,27 @@
-const { Table, TableRow, WidthType } = require("docx");
+const {
+  Table,
+  WidthType,
+  convertMillimetersToTwip,
+  TableRow,
+  TableCell,
+  ImageRun,
+  Paragraph,
+} = require("docx");
+const fs = require("fs");
 const d = require("../reportData.json");
-const { getCell, getImageCell, getShortString } = require("../helper");
+const { getRow, getCell, getShortString } = require("../helper");
+const { table_config } = require("../styling");
 
 function getInfoTable() {
+  const sub_header_cell_width = convertMillimetersToTwip(40.7);
   return new Table({
     width: {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         tableHeader: true,
         children: [
           getCell({
@@ -26,79 +32,164 @@ function getInfoTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Client", cellType: "subheader" }),
+          getCell({
+            title: "Client",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.Client, cols: 3 }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Supplier", cellType: "subheader" }),
+          getCell({
+            title: "Supplier",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.Supplier, cols: 3 }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Factory", cellType: "subheader" }),
+          getCell({
+            title: "Factory",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.Factory, cols: 3 }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "P.O.No.", cellType: "subheader" }),
+          getCell({
+            title: "P.O.No.",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: getShortString(d.PoNo, 10) }),
-          getCell({ title: "Quantity", cellType: "subheader" }),
+          getCell({
+            title: "Quantity",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: `${d.ShipmentQty} ${d.ProductUnit}` }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Item No.", cellType: "subheader" }),
+          getCell({
+            title: "Item No.",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.ItemNo, cols: 3 }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Product Description", cellType: "subheader" }),
+          getCell({
+            title: "Product Description",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.ProductDescription, cols: 3 }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Inspection Type", cellType: "subheader" }),
+          getCell({
+            title: "Inspection Type",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.InspectionType }),
-          getCell({ title: "Sequence", cellType: "subheader" }),
+          getCell({
+            title: "Sequence",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.Sequence }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Inspection Date", cellType: "subheader" }),
+          getCell({
+            title: "Inspection Date",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.InspectionDate }),
           getCell({ title: "Location", cellType: "subheader" }),
           getCell({ title: d.Location }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
-          getCell({ title: "Inspection Basis", cellType: "subheader" }),
+          getCell({
+            title: "Inspection Basis",
+            cellType: "subheader",
+            width: sub_header_cell_width,
+          }),
           getCell({ title: d.InspectionBasis, cols: 3 }),
         ],
       }),
+    ],
+  });
+}
+
+function getPictureTable() {
+  return new Table({
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: table_config.tableMargin,
+    rows: [
       new TableRow({
+        height: { value: convertMillimetersToTwip(60), rule: "exact" },
         children: [
-          getImageCell({
-            type: "jpg",
-            path: "images/test/001.jpg",
-            size: { w: 325, h: 250 },
-            cols: 2,
+          new TableCell({
+            width: {
+              size: convertMillimetersToTwip(89),
+              type: WidthType.DXA,
+            },
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    type: "jpg",
+                    data: fs.readFileSync("images/test/001.jpg"),
+                    transformation: {
+                      width: 325,
+                      height: 250,
+                    },
+                  }),
+                ],
+              }),
+            ],
           }),
-          getImageCell({
-            type: "jpg",
-            path: "images/test/000.jpg",
-            size: { w: 325, h: 250 },
-            cols: 2,
+          new TableCell({
+            width: {
+              size: convertMillimetersToTwip(89),
+              type: WidthType.DXA,
+            },
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    type: "jpg",
+                    data: fs.readFileSync("images/test/000.jpg"),
+                    transformation: {
+                      width: 325,
+                      height: 250,
+                    },
+                  }),
+                ],
+              }),
+            ],
           }),
         ],
       }),
@@ -106,4 +197,6 @@ function getInfoTable() {
   });
 }
 
-module.exports = getInfoTable;
+const Info_Tables = [getInfoTable(), new Paragraph(""), getPictureTable()];
+
+module.exports = Info_Tables;

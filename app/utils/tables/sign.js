@@ -1,44 +1,45 @@
 const {
   Table,
-  TableRow,
   WidthType,
   TableCell,
   Paragraph,
   TextRun,
   AlignmentType,
-  TableBorders,
+  convertInchesToTwip,
+  VerticalAlign,
 } = require("docx");
 const d = require("../reportData.json");
-const { getCell } = require("../helper");
+const { getRow, getCell } = require("../helper");
+const { table_config } = require("../styling");
+const fixed_width = convertInchesToTwip(1.75);
 
 const Sign_Table = new Table({
   width: {
     size: 100,
     type: WidthType.PERCENTAGE,
   },
-  margins: {
-    top: 50,
-    bottom: 50,
-    left: 100,
-    right: 100,
-  },
+  margins: table_config.tableMargin,
   rows: [
-    new TableRow({
+    new getRow({
       children: [
         getCell({
+          width: fixed_width,
           title: "Inspector:",
           cellType: "subheader",
           alignment: "left",
         }),
         getCell({
+          width: fixed_width,
           title: d.Inspector,
         }),
         getCell({
+          width: fixed_width,
           title: "Auditor:",
           cellType: "subheader",
           alignment: "center",
         }),
         getCell({
+          width: fixed_width,
           title: d.Auditor,
         }),
       ],
@@ -47,24 +48,24 @@ const Sign_Table = new Table({
 });
 
 const End_Table = new Table({
-  borders: TableBorders.NONE,
   width: {
     size: 100,
     type: WidthType.PERCENTAGE,
   },
-  margins: {
-    top: 50,
-    bottom: 50,
-    left: 100,
-    right: 100,
-  },
+  margins: table_config.tableMargin,
   rows: [
-    new TableRow({
+    new getRow({
       children: [
         getCell({
+          width: convertInchesToTwip(4.33),
           title: "",
         }),
         new TableCell({
+          width: {
+            size: convertInchesToTwip(2.36),
+            type: WidthType.DXA,
+          },
+          verticalAlign: VerticalAlign.CENTER,
           children: [
             new Paragraph({
               children: [
@@ -78,6 +79,7 @@ const End_Table = new Table({
           ],
         }),
         getCell({
+          width: convertInchesToTwip(4.33),
           title: "",
         }),
       ],
@@ -85,6 +87,6 @@ const End_Table = new Table({
   ],
 });
 
-const SIGN_Tables = [Sign_Table, new Paragraph(""), End_Table];
+const SIGN_Tables = [Sign_Table, End_Table];
 
 module.exports = SIGN_Tables;

@@ -1,12 +1,14 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const { Table, WidthType, Paragraph } = require("docx");
 const d = require("../../reportData.json");
 const {
+  getRow,
   getCell,
   getDynamicTable,
   getPhotosTable,
   getCleanedString,
 } = require("../../helper");
 const getDataSheets = require("../datasheets");
+const { table_config } = require("../../styling");
 
 const empty_paragraph = new Paragraph("");
 const sn = 3;
@@ -22,7 +24,7 @@ const dataSheets = d.InspectionCategories[sn].datasheet;
 
 function getCheckLists() {
   return checkLists.map((item, index) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({
           title: `${sn + 1}.${index + 1}`,
@@ -51,14 +53,9 @@ function getPDWTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `${sn + 1}. ${subTitle}`,
@@ -75,7 +72,7 @@ function getPDWTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Description",
@@ -86,7 +83,7 @@ function getPDWTable() {
           getCell({ title: desp, cols: 3, gray_bg: true }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "No.",

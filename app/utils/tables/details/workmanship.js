@@ -1,11 +1,13 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
+const { Table, WidthType, Paragraph, convertInchesToTwip } = require("docx");
 const d = require("../../reportData.json");
 const {
+  getRow,
   getCell,
   getDynamicTable,
   getPhotosTable,
   getCleanedString,
 } = require("../../helper");
+const { table_config } = require("../../styling");
 
 const empty_paragraph = new Paragraph("");
 const sn = 1;
@@ -20,9 +22,10 @@ const refer = d.InspectionCategories[sn].ReferenceNote;
 const DataLists = d.POItems || [];
 
 function getDefectsTable() {
+  const hyphen_cell_width = convertInchesToTwip(0.29);
   let defects = [];
   DataLists.forEach((item) => {
-    const defect_title = new TableRow({
+    const defect_title = getRow({
       children: [
         getCell({
           title: `Item No: ${item.ItemNo}, Sample Size= ${item.SampleSize} ${d.ProductUnit}`,
@@ -32,9 +35,9 @@ function getDefectsTable() {
       ],
     });
     const defect_details = item.DefectsList.map((ele) => {
-      return new TableRow({
+      return getRow({
         children: [
-          getCell({ title: "-", width: 150, alignment: "left" }),
+          getCell({ title: "-", width: hyphen_cell_width, alignment: "left" }),
           getCell({ title: ele.defectName, alignment: "left" }),
           getCell({ title: ele.CriticaldefectFounded, alignment: "center" }),
           getCell({ title: ele.MajorDefectFounded, alignment: "center" }),
@@ -47,11 +50,11 @@ function getDefectsTable() {
     let totals = [];
     if (dt) {
       totals = [
-        new TableRow({
+        getRow({
           children: [
             getCell({
               title: "",
-              width: 150,
+              width: hyphen_cell_width,
               alignment: "left",
               gray_bg: true,
             }),
@@ -86,11 +89,11 @@ function getDefectsTable() {
             }),
           ],
         }),
-        new TableRow({
+        getRow({
           children: [
             getCell({
               title: "",
-              width: 150,
+              width: hyphen_cell_width,
               alignment: "left",
               gray_bg: true,
             }),
@@ -123,17 +126,12 @@ function getDefectsTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
-            width: 7050,
+            width: convertInchesToTwip(4.92),
             title: "Defects",
             gray_bg: true,
             alignment: "center",
@@ -162,18 +160,21 @@ function getDefectsTable() {
 }
 
 function getCheckLists() {
-  const check_list_title = new TableRow({
+  const check_list_title = getRow({
     children: [
       getCell({
+        width: convertInchesToTwip(0.52),
         title: "No.",
-        alignment: "center",
+        alignment: "left",
         gray_bg: true,
       }),
       getCell({
+        width: convertInchesToTwip(1.53),
         title: "Check Point",
         gray_bg: true,
       }),
       getCell({
+        width: convertInchesToTwip(4.96),
         title: "Criteria",
         gray_bg: true,
         alignment: "center",
@@ -183,11 +184,11 @@ function getCheckLists() {
   });
 
   const check_list_details = checkLists.map((item, index) => {
-    return new TableRow({
+    return getRow({
       children: [
-        getCell({ title: `${sn + 1}.${index + 1}`, alignment: "center" }),
-        getCell({ title: item.name, alignment: "center" }),
-        getCell({ title: item.Criteria, alignment: "center", cols: 4 }),
+        getCell({ title: `${sn + 1}.${index + 1}`, alignment: "left" }),
+        getCell({ title: item.name, alignment: "left" }),
+        getCell({ title: item.Criteria, alignment: "left", cols: 4 }),
       ],
     });
   });
@@ -200,14 +201,8 @@ function getDefectPhotos() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Defect Photos",
@@ -238,16 +233,12 @@ function getWSTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(5.31),
             title: `${sn + 1}. ${subTitle}`,
             cellType: "subheader",
             alignment: "left",
@@ -255,6 +246,7 @@ function getWSTable() {
             cols: 4,
           }),
           getCell({
+            width: convertInchesToTwip(1.69),
             title: result,
             cols: 2,
             alignment: "center",
@@ -262,18 +254,24 @@ function getWSTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(0.88),
             title: "Description",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
-          getCell({ title: desp, cols: 5, gray_bg: true }),
+          getCell({
+            width: convertInchesToTwip(6.12),
+            title: desp,
+            cols: 5,
+            gray_bg: true,
+          }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Sampling Standard",
@@ -289,35 +287,35 @@ function getWSTable() {
           getCell({
             title: "Defect",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
             title: "Critical",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
             title: "Major",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
             title: "Minor",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Sampling Plan",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
@@ -328,7 +326,7 @@ function getWSTable() {
           getCell({
             title: "AQL",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
@@ -349,12 +347,12 @@ function getWSTable() {
         ],
       }),
 
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Inspection Level",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({
@@ -365,7 +363,7 @@ function getWSTable() {
           getCell({
             title: "Sample Size",
             cellType: "normal",
-            alignment: "center",
+            alignment: "left",
             gray_bg: true,
           }),
           getCell({

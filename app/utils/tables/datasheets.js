@@ -1,9 +1,10 @@
-const { Table, TableRow, WidthType, Paragraph } = require("docx");
-const { getCell, getImageCell, getPhotosTable } = require("../helper");
+const { Table, WidthType, Paragraph } = require("docx");
+const { getRow, getCell, getImageCell, getPhotosTable } = require("../helper");
+const { table_config } = require("../styling");
 
 function getNormalDatasheet(data) {
   const rows = data?.datas.map((item) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({ title: item.ItemNo, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
@@ -18,14 +19,9 @@ function getNormalDatasheet(data) {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         tableHeader: true,
         children: [
           getCell({
@@ -36,7 +32,7 @@ function getNormalDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({ title: "Item No.", cellType: "subheader" }),
           getCell({ title: "Specification", cellType: "subheader" }),
@@ -51,7 +47,7 @@ function getNormalDatasheet(data) {
 
 function getWithPicDatasheet(data) {
   const rows = data?.datas.map((item) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({ title: item.Checkpoint, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
@@ -66,14 +62,9 @@ function getWithPicDatasheet(data) {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: data.name,
@@ -83,7 +74,7 @@ function getWithPicDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Item No: " + data.ItemNo,
@@ -93,7 +84,7 @@ function getWithPicDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getImageCell({
             type: "jpg",
@@ -103,7 +94,7 @@ function getWithPicDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({ title: "Check Point", cellType: "subheader" }),
           getCell({ title: "Specification", cellType: "subheader" }),
@@ -118,7 +109,7 @@ function getWithPicDatasheet(data) {
 
 function getCDFDatasheet(data) {
   const rows = data?.datas.map((item, index) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({ title: index + 1, cellType: "normal" }),
         getCell({ title: item.ComponentName, cellType: "normal" }),
@@ -134,14 +125,9 @@ function getCDFDatasheet(data) {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         tableHeader: true,
         children: [
           getCell({
@@ -152,7 +138,7 @@ function getCDFDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `Item No.: ${data.ItemNo}`,
@@ -170,7 +156,7 @@ function getCDFDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({ title: "No.", cellType: "subheader" }),
           getCell({ title: "Component Name", cellType: "subheader" }),
@@ -186,7 +172,7 @@ function getCDFDatasheet(data) {
 
 function getBarCodeDatasheet(data) {
   const rows = data?.datas.map((item) => {
-    return new TableRow({
+    return getRow({
       children: [
         getCell({ title: item.Position, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
@@ -201,14 +187,9 @@ function getBarCodeDatasheet(data) {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         tableHeader: true,
         children: [
           getCell({
@@ -219,7 +200,7 @@ function getBarCodeDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `Item No.: ${data.ItemNo}`,
@@ -229,7 +210,7 @@ function getBarCodeDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `Color: ${data.ItemNo}`,
@@ -239,7 +220,7 @@ function getBarCodeDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: `Size: ${data.ItemNo}`,
@@ -249,7 +230,7 @@ function getBarCodeDatasheet(data) {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({ title: "Position", cellType: "subheader" }),
           getCell({ title: "Specification", cellType: "subheader" }),

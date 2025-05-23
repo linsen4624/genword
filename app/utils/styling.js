@@ -1,17 +1,28 @@
-const { AlignmentType } = require("docx");
+const { AlignmentType, convertMillimetersToTwip } = require("docx");
 
 const Colors = {
-  gray: "f5f5f5",
-  pink: "e6a4ae",
+  gray: "f2f2f2",
+  pink: "e5b7b7",
   black: "000000",
-  red: "8B0000",
+  red: "bd0002",
+  yellow: "ffff00",
+};
+
+const table_config = {
+  tableMargin: {
+    top: 0,
+    bottom: 0,
+    left: 100,
+    right: 100,
+  },
+  rowHeight: { value: convertMillimetersToTwip(5), rule: "atLeast" },
 };
 
 const styling = {
   default: {
     document: {
       run: {
-        size: 20,
+        size: 20, // 微软特殊的数字单位Twip，20 相当于10号字
         font: "Arial",
       },
     },
@@ -94,4 +105,4 @@ const styling = {
   ],
 };
 
-module.exports = { Colors, styling };
+module.exports = { Colors, styling, table_config };

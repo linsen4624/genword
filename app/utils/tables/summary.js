@@ -6,11 +6,12 @@ const {
   VerticalAlign,
   Paragraph,
   TextRun,
+  convertInchesToTwip,
 } = require("docx");
 const d = require("../reportData.json");
-const { getCell, getLinkCell, getCleanedString } = require("../helper");
-const { Colors } = require("../styling");
-const sub_header_cell_width = 4000;
+const { getRow, getCell, getLinkCell, getCleanedString } = require("../helper");
+const { Colors, table_config } = require("../styling");
+const sub_header_cell_width = convertInchesToTwip(2.75);
 
 function getDataRows() {
   const DataLists = d.InspectionCategories || [];
@@ -34,7 +35,7 @@ function getDataRows() {
       });
     });
 
-    return new TableRow({
+    return getRow({
       children: [
         getLinkCell({
           width: sub_header_cell_width,
@@ -76,14 +77,9 @@ function geSummaryTable() {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "INSPECTION RESULT SUMMARY",
@@ -94,7 +90,7 @@ function geSummaryTable() {
           }),
         ],
       }),
-      new TableRow({
+      getRow({
         children: [
           getCell({
             title: "Category",
@@ -122,7 +118,7 @@ function geSummaryTable() {
       ...getDataRows(),
 
       new TableRow({
-        height: { value: 700, rule: "exact" },
+        height: { value: convertInchesToTwip(0.48), rule: "atLeast" },
         children: [
           getCell({
             width: sub_header_cell_width,
@@ -132,6 +128,7 @@ function geSummaryTable() {
             style: "big_header",
           }),
           new TableCell({
+            width: { size: convertInchesToTwip(4.25), type: WidthType.DXA },
             verticalAlign: VerticalAlign.CENTER,
             columnSpan: 3,
             children: [

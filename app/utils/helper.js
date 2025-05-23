@@ -20,7 +20,7 @@ const {
   Table,
 } = require("docx");
 const fs = require("fs");
-const { Colors } = require("./styling");
+const { Colors, table_config } = require("./styling");
 
 const for_header = {
   fill: Colors.pink,
@@ -75,10 +75,29 @@ function getParagraph(para) {
 }
 
 /**
+ * @function getRow
+ * @param {*} para
+ * para = {
+ *    tableHeader:     Object
+ *    children:        Array
+ * }
+ ** @return {TableRow}
+ */
+
+function getRow(para) {
+  return new TableRow({
+    tableHeader: para.tableHeader,
+    height: table_config.rowHeight,
+    children: para.children,
+  });
+}
+
+/**
  * @function getCell
  * @param {*} para
  * para = {
- *    width:     Object
+ *    borders:   Object
+ *    width:     Number
  *    title:     String, required
  *    cellType:  String, options are [header, subheader, normal] and normal is the default value
  *    alignment: String, options are [left, center, right] and left is the default value
@@ -100,6 +119,7 @@ function getCell(para) {
     : { size: 0, type: WidthType.AUTO };
 
   return new TableCell({
+    borders: para.borders,
     width: cellWidth,
     children: [
       getParagraph({
@@ -236,6 +256,7 @@ function getDynamicTable(para) {
   const rows = DataLists.map((item, index) => {
     const numbering = `${para.prefix}.${index + 1}`;
     return new TableRow({
+      height: table_config.rowHeight,
       children: [
         new TableCell({
           width: {
@@ -267,14 +288,10 @@ function getDynamicTable(para) {
       size: 100,
       type: WidthType.PERCENTAGE,
     },
-    margins: {
-      top: 50,
-      bottom: 50,
-      left: 100,
-      right: 100,
-    },
+    margins: table_config.tableMargin,
     rows: [
       new TableRow({
+        height: table_config.rowHeight,
         children: [
           new TableCell({
             verticalAlign: VerticalAlign.CENTER,
@@ -399,6 +416,7 @@ function getShortString(str, num) {
 }
 
 module.exports = {
+  getRow,
   getCell,
   getImageCell,
   getLinkCell,
