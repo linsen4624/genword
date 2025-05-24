@@ -87,6 +87,10 @@ const End_Table = new Table({
   ],
 });
 
-const SIGN_Tables = [Sign_Table, End_Table];
+const SIGN_Tables = [
+  Sign_Table,
+  new Paragraph({ text: "", spacing: { line: 0 } }),
+  End_Table,
+];
 
 module.exports = SIGN_Tables;

@@ -15,9 +15,12 @@ const desp =
   "Check / verify the quantity of product available. The standard procedure of pre-shipment inspection required 100% of product has been finished production and ≥80% of product has been packed into export carton.";
 const subTitle = d.InspectionCategories[sn].CategoryName;
 const result = d.InspectionCategories[sn].Result;
+const photogroup = d.InspectionCategories[sn].PhotoGroup;
 const bm = getCleanedString(subTitle).toLowerCase();
 const sap = d.InspectionCategories[sn].SpecialAttention;
 const refer = d.InspectionCategories[sn].ReferenceNote;
+const sap_photos = d.InspectionCategories[sn].SpecialAttentionPhotos;
+const refer_photos = d.InspectionCategories[sn].ReferenceNotePhotos;
 const DataLists = d.POItems || [];
 
 const Total_Values = {
@@ -271,18 +274,14 @@ function getQuantityTable() {
   });
 }
 
-const photos = getPhotosTable([
-  // "images/test/001.jpg",
-  // "images/test/000.jpg",
-  // "images/test/001.jpg",
-  // "images/test/000.jpg",
-  "",
-  "",
-  "",
-  "",
-]);
+const Quantity_Tables = [getQuantityTable()];
 
-const Quantity_Tables = [getQuantityTable(), empty_paragraph, photos];
+if (photogroup.length > 0) {
+  photogroup.forEach((item) => {
+    Quantity_Tables.push(empty_paragraph);
+    Quantity_Tables.push(getPhotosTable(item));
+  });
+}
 
 if (sap?.length > 0) {
   Quantity_Tables.push(empty_paragraph);
@@ -294,8 +293,11 @@ if (sap?.length > 0) {
       data: sap,
     })
   );
+}
+
+if (sap_photos?.length > 0) {
   Quantity_Tables.push(empty_paragraph);
-  Quantity_Tables.push(getPhotosTable(["", "", "", ""]));
+  Quantity_Tables.push(getPhotosTable(sap_photos));
 }
 
 if (refer?.length > 0) {
@@ -308,8 +310,11 @@ if (refer?.length > 0) {
       data: refer,
     })
   );
+}
+
+if (refer_photos?.length > 0) {
   Quantity_Tables.push(empty_paragraph);
-  Quantity_Tables.push(getPhotosTable(["", "", "", ""]));
+  Quantity_Tables.push(getPhotosTable(refer_photos));
 }
 
 module.exports = Quantity_Tables;

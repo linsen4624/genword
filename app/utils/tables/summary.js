@@ -5,12 +5,17 @@ const {
   TableCell,
   VerticalAlign,
   Paragraph,
-  TextRun,
   convertInchesToTwip,
 } = require("docx");
 const d = require("../reportData.json");
-const { getRow, getCell, getLinkCell, getCleanedString } = require("../helper");
-const { Colors, table_config } = require("../styling");
+const {
+  getRow,
+  getCell,
+  getLinkCell,
+  getCleanedString,
+  getFormattedConclusion,
+} = require("../helper");
+const { table_config } = require("../styling");
 const sub_header_cell_width = convertInchesToTwip(2.75);
 
 function getDataRows() {
@@ -63,15 +68,6 @@ function getDataRows() {
 }
 
 function geSummaryTable() {
-  let conclusion_result = "CONFORM";
-  let conclusion_text = " to client's requirement";
-  if (d.Result === "not confirmed") {
-    conclusion_result = "NOT CONFORM";
-  }
-  if (d.Result === "pending") {
-    conclusion_result = "PENDING";
-    conclusion_text = " for client's evaluation";
-  }
   return new Table({
     width: {
       size: 100,
@@ -133,18 +129,7 @@ function geSummaryTable() {
             columnSpan: 3,
             children: [
               new Paragraph({
-                children: [
-                  new TextRun({
-                    text: conclusion_result,
-                    bold: true,
-                    size: 24,
-                    color: Colors.red,
-                  }),
-                  new TextRun({
-                    text: conclusion_text,
-                    bold: true,
-                  }),
-                ],
+                children: getFormattedConclusion(d.Result),
               }),
             ],
           }),

@@ -141,6 +141,7 @@ function getInfoTable() {
 }
 
 function getPictureTable() {
+  const imgs = d.ProductPhotos;
   return new Table({
     width: {
       size: 100,
@@ -149,7 +150,7 @@ function getPictureTable() {
     margins: table_config.tableMargin,
     rows: [
       new TableRow({
-        height: { value: convertMillimetersToTwip(60), rule: "exact" },
+        height: { value: convertMillimetersToTwip(60), rule: "atLeast" },
         children: [
           new TableCell({
             width: {
@@ -161,7 +162,7 @@ function getPictureTable() {
                 children: [
                   new ImageRun({
                     type: "jpg",
-                    data: fs.readFileSync("images/test/001.jpg"),
+                    data: fs.readFileSync(`images${imgs[0].url}`),
                     transformation: {
                       width: 325,
                       height: 250,
@@ -181,7 +182,7 @@ function getPictureTable() {
                 children: [
                   new ImageRun({
                     type: "jpg",
-                    data: fs.readFileSync("images/test/000.jpg"),
+                    data: fs.readFileSync(`images${imgs[1].url}`),
                     transformation: {
                       width: 325,
                       height: 250,

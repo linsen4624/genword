@@ -1,5 +1,5 @@
 const { Table, TableRow, WidthType, Paragraph } = require("docx");
-// const d = require("../reportData.json");
+const d = require("../reportData.json");
 const { getCell, getPhotosTable } = require("../helper");
 const { table_config } = require("../styling");
 
@@ -27,10 +27,13 @@ function getOPTable() {
   });
 }
 
-const OP_Tables = [
-  getOPTable(),
-  empty_paragraph,
-  getPhotosTable(["", "", "", ""]),
-];
+const OP_Tables = [getOPTable()];
+const opg = d.OtherPhotoGroup;
+if (opg?.length > 0) {
+  opg.forEach((item) => {
+    OP_Tables.push(empty_paragraph);
+    OP_Tables.push(getPhotosTable(item));
+  });
+}
 
 module.exports = OP_Tables;

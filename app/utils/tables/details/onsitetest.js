@@ -16,9 +16,13 @@ const desp =
   "Randomly select samples, proceed tests on site to verify some important characteristics of product, report findings and conformities.";
 const subTitle = d.InspectionCategories[sn].CategoryName;
 const result = d.InspectionCategories[sn].Result;
+const photogroup = d.InspectionCategories[sn].PhotoGroup;
 const bm = getCleanedString(subTitle).toLowerCase();
 const sap = d.InspectionCategories[sn].SpecialAttention;
 const refer = d.InspectionCategories[sn].ReferenceNote;
+const sap_photos = d.InspectionCategories[sn].SpecialAttentionPhotos;
+const refer_photos = d.InspectionCategories[sn].ReferenceNotePhotos;
+
 const checkLists = d.InspectionCategories[sn].checklist;
 const dataSheets = d.InspectionCategories[sn].datasheet;
 
@@ -127,11 +131,14 @@ function getOSTTable() {
   });
 }
 
-let OST_Tables = [
-  getOSTTable(),
-  empty_paragraph,
-  getPhotosTable(["", "", "", ""]),
-];
+let OST_Tables = [getOSTTable()];
+
+if (photogroup.length > 0) {
+  photogroup.forEach((item) => {
+    OST_Tables.push(empty_paragraph);
+    OST_Tables.push(getPhotosTable(item));
+  });
+}
 
 if (sap?.length > 0) {
   OST_Tables.push(empty_paragraph);
@@ -143,8 +150,10 @@ if (sap?.length > 0) {
       data: sap,
     })
   );
+}
+if (sap_photos?.length > 0) {
   OST_Tables.push(empty_paragraph);
-  OST_Tables.push(getPhotosTable(["", "", "", ""]));
+  OST_Tables.push(getPhotosTable(sap_photos));
 }
 
 if (refer?.length > 0) {
@@ -157,8 +166,11 @@ if (refer?.length > 0) {
       data: refer,
     })
   );
+}
+
+if (refer_photos?.length > 0) {
   OST_Tables.push(empty_paragraph);
-  OST_Tables.push(getPhotosTable(["", "", "", ""]));
+  OST_Tables.push(getPhotosTable(refer_photos));
 }
 
 if (dataSheets?.length > 0) {

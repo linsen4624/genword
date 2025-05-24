@@ -15,10 +15,13 @@ const desp =
   "Randomly draw samples, examine style, construction, color, size, appearance by visual inspection, test the basic function, performance, safety, other characteristics, report defects caused by workmanship.";
 const subTitle = d.InspectionCategories[sn].CategoryName;
 const checkLists = d.InspectionCategories[sn].checklist;
+const photogroup = d.InspectionCategories[sn].PhotoGroup;
 const result = d.InspectionCategories[sn].Result;
 const bm = getCleanedString(subTitle).toLowerCase();
 const sap = d.InspectionCategories[sn].SpecialAttention;
 const refer = d.InspectionCategories[sn].ReferenceNote;
+const sap_photos = d.InspectionCategories[sn].SpecialAttentionPhotos;
+const refer_photos = d.InspectionCategories[sn].ReferenceNotePhotos;
 const DataLists = d.POItems || [];
 
 function getDefectsTable() {
@@ -196,7 +199,8 @@ function getCheckLists() {
 }
 
 function getDefectPhotos() {
-  const defect_photo_title = new Table({
+  const defect_photo_table = [];
+  const defect_title = new Table({
     width: {
       size: 100,
       type: WidthType.PERCENTAGE,
@@ -214,17 +218,15 @@ function getDefectPhotos() {
     ],
   });
 
-  const defect_photo_list = getPhotosTable([
-    // "images/test/001.jpg",
-    // "images/test/000.jpg",
-    // "images/test/001.jpg",
-    // "images/test/000.jpg",
-    "",
-    "",
-    "",
-    "",
-  ]);
-  return [defect_photo_title, empty_paragraph, defect_photo_list];
+  defect_photo_table.push(defect_title);
+
+  if (photogroup.length > 0) {
+    photogroup.forEach((item) => {
+      defect_photo_table.push(empty_paragraph);
+      defect_photo_table.push(getPhotosTable(item));
+    });
+  }
+  return defect_photo_table;
 }
 
 function getWSTable() {
@@ -406,8 +408,11 @@ if (sap?.length > 0) {
       data: sap,
     })
   );
+}
+
+if (sap_photos?.length > 0) {
   WS_Tables.push(empty_paragraph);
-  WS_Tables.push(getPhotosTable(["", "", "", ""]));
+  WS_Tables.push(getPhotosTable(sap_photos));
 }
 
 if (refer?.length > 0) {
@@ -420,8 +425,11 @@ if (refer?.length > 0) {
       data: refer,
     })
   );
+}
+
+if (refer_photos?.length > 0) {
   WS_Tables.push(empty_paragraph);
-  WS_Tables.push(getPhotosTable(["", "", "", ""]));
+  WS_Tables.push(getPhotosTable(refer_photos));
 }
 
 module.exports = WS_Tables;

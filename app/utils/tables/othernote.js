@@ -77,7 +77,7 @@ function getONTable() {
 const ON_Tables = [
   getONTable(),
   empty_paragraph,
-  getPhotosTable(["", "", "", ""]),
+  getPhotosTable(d.OtherNotesPhotos),
 ];
 
 module.exports = ON_Tables;

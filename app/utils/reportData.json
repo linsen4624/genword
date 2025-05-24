@@ -439,25 +439,11 @@
             ],
             "SpecialAttention": [],
             "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "ReferenceNote": [],
             "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "PhotoGroup": [],
             "Result": "Conformed"
@@ -477,25 +463,11 @@
             "datasheet": [],
             "SpecialAttention": [],
             "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "ReferenceNote": [],
             "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "PhotoGroup": []
         },
@@ -580,25 +552,10 @@
             "datasheet": [],
             "SpecialAttention": [],
             "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "ReferenceNote": [],
             "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
             ],
             "PhotoGroup": []
         },
@@ -689,25 +646,11 @@
                 "Actual found the carton gross weight and carton dimension was out of specification, details refer to as below data sheet with red marking. "
             ],
             "SpecialAttentionPhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "ReferenceNote": [],
             "ReferenceNotePhotos": [
-                {
-                    "url": "https://example.com/photo1.jpg",
-                    "description": "photo1"
-                },
-                {
-                    "url": "https://example.com/photo2.jpg",
-                    "description": "photo2"
-                }
+
             ],
             "PhotoGroup": []
         }

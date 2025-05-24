@@ -55,8 +55,16 @@ const signature = new Table({
           verticalAlign: VerticalAlign.CENTER,
           children: [
             new Paragraph({
-              alignment: AlignmentType.CENTER,
-              children: [new TextRun("")],
+              children: [
+                new ImageRun({
+                  type: "jpg",
+                  data: fs.readFileSync(`images${d.SupervisorSignPhotoUrl}`),
+                  transformation: {
+                    width: 78,
+                    height: 48,
+                  },
+                }),
+              ],
             }),
           ],
         }),

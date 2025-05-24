@@ -1,5 +1,18 @@
-const { Table, WidthType, Paragraph } = require("docx");
-const { getRow, getCell, getImageCell, getPhotosTable } = require("../helper");
+const {
+  Table,
+  WidthType,
+  Paragraph,
+  TableCell,
+  VerticalAlign,
+  AlignmentType,
+} = require("docx");
+const {
+  getRow,
+  getCell,
+  getImageCell,
+  getPhotosTable,
+  getFormattedTextArray,
+} = require("../helper");
 const { table_config } = require("../styling");
 
 function getNormalDatasheet(data) {
@@ -9,7 +22,15 @@ function getNormalDatasheet(data) {
         getCell({ title: item.ItemNo, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
         getCell({ title: item.Tolerance, cellType: "normal" }),
-        getCell({ title: item.Result, cellType: "normal" }),
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: getFormattedTextArray(item.Result),
+            }),
+          ],
+        }),
       ],
     });
   });
@@ -52,7 +73,15 @@ function getWithPicDatasheet(data) {
         getCell({ title: item.Checkpoint, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
         getCell({ title: item.Tolerance, cellType: "normal" }),
-        getCell({ title: item.Result, cellType: "normal" }),
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: getFormattedTextArray(item.Result),
+            }),
+          ],
+        }),
       ],
     });
   });
@@ -87,8 +116,8 @@ function getWithPicDatasheet(data) {
       getRow({
         children: [
           getImageCell({
-            type: "jpg",
-            path: "images/test/000.jpg",
+            type: "png",
+            path: `images${data.photo.url}`,
             size: { w: 325, h: 250 },
             cols: 4,
           }),
@@ -114,7 +143,15 @@ function getCDFDatasheet(data) {
         getCell({ title: index + 1, cellType: "normal" }),
         getCell({ title: item.ComponentName, cellType: "normal" }),
         getCell({ title: item.OnCDF, cellType: "normal" }),
-        getCell({ title: item.Findings, cellType: "normal" }),
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: getFormattedTextArray(item.Findings),
+            }),
+          ],
+        }),
         getCell({ title: item.Result, cellType: "normal" }),
       ],
     });
@@ -176,7 +213,15 @@ function getBarCodeDatasheet(data) {
       children: [
         getCell({ title: item.Position, cellType: "normal" }),
         getCell({ title: item.Specification, cellType: "normal" }),
-        getCell({ title: item.Findings, cellType: "normal" }),
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: getFormattedTextArray(item.Findings),
+            }),
+          ],
+        }),
         getCell({ title: item.Result, cellType: "normal" }),
       ],
     });

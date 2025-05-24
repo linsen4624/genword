@@ -319,74 +319,112 @@ function getDynamicTable(para) {
  * @function getPhotosTable
  * @param {*} para
  * para = {
- *    paths:  Array, with a fixed length of 4
+ *    pg:  Array
  * }
  ** @return {Table}
  */
 
-function getPhotosTable(paths) {
-  if (paths.length <= 0) return;
+function getPhotosTable(pg) {
+  const photos = pg.photos || pg;
+  const len = photos?.length || 0;
+  if (len <= 0) return;
+  const photo_prefix = "images";
   const setPhoto = (p) => {
-    return p === ""
-      ? new TextRun("")
-      : new ImageRun({
+    return p && p !== ""
+      ? new ImageRun({
           type: "jpg",
-          data: fs.readFileSync(p),
+          data: fs.readFileSync(photo_prefix + p),
           transformation: {
             width: 325,
             height: 250,
           },
-        });
+        })
+      : new TextRun("NA");
   };
+
+  const photoRows = [];
+  if (pg.name && pg.name !== "") {
+    photoRows.push(
+      new TableRow({
+        children: [
+          new TableCell({
+            verticalAlign: VerticalAlign.CENTER,
+            children: [
+              new Paragraph({
+                text: pg.name,
+                alignment: AlignmentType.CENTER,
+              }),
+            ],
+            columnSpan: 2,
+          }),
+        ],
+      })
+    );
+  }
+  let image_cells = [];
+  let text_cells = [];
+
+  photos.forEach((item, index) => {
+    const flag = index + 1;
+
+    image_cells.push(
+      new TableCell({
+        children: [
+          new Paragraph({
+            children: [setPhoto(item.url)],
+            alignment: AlignmentType.CENTER,
+          }),
+        ],
+      })
+    );
+
+    text_cells.push(
+      new TableCell({
+        children: [
+          new Paragraph({
+            text: item.description,
+            alignment: AlignmentType.CENTER,
+          }),
+        ],
+      })
+    );
+
+    if (flag % 2 === 0) {
+      photoRows.push(new TableRow({ children: image_cells }));
+      photoRows.push(new TableRow({ children: text_cells }));
+      image_cells = [];
+      text_cells = [];
+    } else if (flag === len) {
+      image_cells.push(
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              text: "NA",
+              alignment: AlignmentType.CENTER,
+            }),
+          ],
+        })
+      );
+      text_cells.push(
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              text: "-",
+              alignment: AlignmentType.CENTER,
+            }),
+          ],
+        })
+      );
+      photoRows.push(new TableRow({ children: image_cells }));
+      photoRows.push(new TableRow({ children: text_cells }));
+    }
+  });
 
   return new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
-    rows: [
-      new TableRow({
-        children: [
-          new TableCell({
-            verticalAlign: VerticalAlign.CENTER,
-            children: [
-              new Paragraph({
-                children: [setPhoto(paths[0])],
-                alignment: AlignmentType.CENTER,
-              }),
-            ],
-          }),
-          new TableCell({
-            verticalAlign: VerticalAlign.CENTER,
-            children: [
-              new Paragraph({
-                children: [setPhoto(paths[1])],
-                alignment: AlignmentType.CENTER,
-              }),
-            ],
-          }),
-        ],
-      }),
-      new TableRow({
-        children: [
-          new TableCell({
-            verticalAlign: VerticalAlign.CENTER,
-            children: [
-              new Paragraph({
-                children: [setPhoto(paths[2])],
-                alignment: AlignmentType.CENTER,
-              }),
-            ],
-          }),
-          new TableCell({
-            verticalAlign: VerticalAlign.CENTER,
-            children: [
-              new Paragraph({
-                children: [setPhoto(paths[3])],
-                alignment: AlignmentType.CENTER,
-              }),
-            ],
-          }),
-        ],
-      }),
-    ],
+    rows: photoRows,
   });
 }
 
@@ -409,10 +447,81 @@ function getCleanedString(str) {
  */
 
 function getShortString(str, num) {
-  if (str.length > num) {
-    return str.substring(0, num) + "...";
-  }
+  if (str.length > num) return str.substring(0, num) + "...";
   return str;
+}
+
+/**
+ * @function getFormattedTextArray
+ * @param {*} str
+ * @purpose Marking the content where located in brackets as red and remove the brackets.
+ ** @return {Array}
+ */
+
+function getFormattedTextArray(str) {
+  if (str.indexOf("[") === -1) return [new TextRun(str)];
+  const parts = [];
+  let currentIndex = 0;
+
+  while (currentIndex < str.length) {
+    const openBracketIndex = str.indexOf("[", currentIndex);
+    if (openBracketIndex === -1) {
+      parts.push(new TextRun(str.substring(currentIndex)));
+      break;
+    }
+
+    if (openBracketIndex > currentIndex) {
+      parts.push(new TextRun(str.substring(currentIndex, openBracketIndex)));
+    }
+
+    const closeBracketIndex = str.indexOf("]", openBracketIndex + 1);
+    if (closeBracketIndex === -1) {
+      parts.push(new TextRun(str.substring(openBracketIndex)));
+      break;
+    }
+    parts.push(
+      new TextRun({
+        text: str.substring(openBracketIndex, closeBracketIndex + 1),
+        color: Colors.red,
+      })
+    );
+    currentIndex = closeBracketIndex + 1;
+  }
+  return parts;
+}
+
+/**
+ * @function getFormattedConclusion
+ * @param {*} resultStr
+ ** @return {Array}
+ */
+
+function getFormattedConclusion(resultStr) {
+  let conclusion_result = "CONFORM";
+  let resultColor = Colors.black;
+  let conclusion_text = " to client's requirement";
+  if (resultStr === "not confirmed") {
+    conclusion_result = "NOT CONFORM";
+    resultColor = Colors.red;
+  }
+  if (resultStr === "pending") {
+    conclusion_result = "PENDING";
+    conclusion_text = " for client's evaluation";
+    resultColor = Colors.yellow;
+  }
+
+  return [
+    new TextRun({
+      text: conclusion_result,
+      bold: true,
+      size: 24,
+      color: resultColor,
+    }),
+    new TextRun({
+      text: conclusion_text,
+      bold: true,
+    }),
+  ];
 }
 
 module.exports = {
@@ -424,4 +533,6 @@ module.exports = {
   getPhotosTable,
   getCleanedString,
   getShortString,
+  getFormattedTextArray,
+  getFormattedConclusion,
 };
