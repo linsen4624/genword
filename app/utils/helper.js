@@ -337,6 +337,8 @@ function getPhotosTable(pg) {
           transformation: {
             width: 325,
             height: 250,
+            // width: 236,
+            // height: 170,
           },
         })
       : new TextRun("NA");
