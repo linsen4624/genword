@@ -6,4 +6,6 @@ module.exports = (app) => {
   router.get("/", controller.home.index);
 
   router.get("/api/generate-word", controller.generateWord.create);
+  router.post("/uploadJSON", controller.upload.upload_json);
+  router.post("/uploadZip", controller.upload.upload_zip);
 };
