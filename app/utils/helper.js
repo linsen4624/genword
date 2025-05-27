@@ -142,6 +142,7 @@ function getCell(para) {
  * @param {*} para
  * para = {
  *    title:     String, required
+ *    width:     Number
  *    cellType:  String, options are [header, subheader, normal] and normal is the default value
  *    alignment: String, options are [left, center, right] and left is the default value
  *    target:    String, the id of the element that should be linked to
@@ -161,6 +162,10 @@ function getLinkCell(para) {
   } else if (para.alignment === "right") {
     align_way = AlignmentType.RIGHT;
   }
+
+  const cellWidth = para.width
+    ? { size: para.width, type: WidthType.DXA }
+    : { size: 0, type: WidthType.AUTO };
 
   const single_link = [
     new InternalHyperlink({
@@ -194,6 +199,7 @@ function getLinkCell(para) {
     });
   }
   return new TableCell({
+    width: cellWidth,
     children: [
       new Paragraph({
         children: multiple_links.length === 0 ? single_link : multiple_links,
@@ -483,7 +489,7 @@ function getFormattedTextArray(str) {
     }
     parts.push(
       new TextRun({
-        text: str.substring(openBracketIndex, closeBracketIndex + 1),
+        text: str.substring(openBracketIndex + 1, closeBracketIndex),
         color: Colors.red,
       })
     );
@@ -494,11 +500,11 @@ function getFormattedTextArray(str) {
 
 /**
  * @function getFormattedConclusion
- * @param {*} resultStr
- ** @return {Array}
+ * @param {resultStr, isConclusion}
+ ** @return {Array, Object}
  */
 
-function getFormattedConclusion(resultStr) {
+function getFormattedConclusion(resultStr, isConclusion) {
   let conclusion_result = "CONFORM";
   let resultColor = Colors.black;
   let conclusion_text = " to client's requirement";
@@ -512,18 +518,25 @@ function getFormattedConclusion(resultStr) {
     resultColor = Colors.yellow;
   }
 
-  return [
-    new TextRun({
-      text: conclusion_result,
-      bold: true,
-      size: 24,
-      color: resultColor,
-    }),
-    new TextRun({
-      text: conclusion_text,
-      bold: true,
-    }),
-  ];
+  if (isConclusion) {
+    return [
+      new TextRun({
+        text: conclusion_result,
+        bold: true,
+        size: 24,
+        color: resultColor,
+      }),
+      new TextRun({
+        text: conclusion_text,
+        bold: true,
+      }),
+    ];
+  }
+  return new TextRun({
+    text: conclusion_result,
+    bold: true,
+    color: resultColor,
+  });
 }
 
 module.exports = {

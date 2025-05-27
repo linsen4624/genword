@@ -8,7 +8,7 @@ const {
 } = require("../utils/tables/header&footer");
 const { styling } = require("../utils/styling");
 const information = require("../utils/tables/information");
-const geSummaryTable = require("../utils/tables/summary");
+const summary = require("../utils/tables/summary");
 const details = require("../utils/tables/details");
 const othernote = require("../utils/tables/othernote");
 const otherphoto = require("../utils/tables/otherphotos");
@@ -54,7 +54,7 @@ class GenerateWordController extends Controller {
               new Paragraph(""),
               ...information,
               new Paragraph(""),
-              geSummaryTable(),
+              ...summary,
               new Paragraph(""),
               ...details,
               new Paragraph(""),

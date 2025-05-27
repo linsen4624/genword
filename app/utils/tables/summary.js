@@ -6,6 +6,7 @@ const {
   VerticalAlign,
   Paragraph,
   convertInchesToTwip,
+  AlignmentType,
 } = require("docx");
 const d = require("../reportData.json");
 const {
@@ -17,6 +18,8 @@ const {
 } = require("../helper");
 const { table_config } = require("../styling");
 const sub_header_cell_width = convertInchesToTwip(2.75);
+const all_sap_links = [];
+const all_refer_links = [];
 
 function getDataRows() {
   const DataLists = d.InspectionCategories || [];
@@ -27,17 +30,21 @@ function getDataRows() {
     const refer_links = [];
 
     item.SpecialAttention.forEach((ele, idx) => {
-      sap_links.push({
+      const tmp_sap = {
         title: `${SerialNo}.${idx + 1}`,
         target: for_bookmark + `_sap_${SerialNo}_${idx + 1}`,
-      });
+      };
+      sap_links.push(tmp_sap);
+      all_sap_links.push(Object.assign({}, tmp_sap, { text: ele }));
     });
 
     item.ReferenceNote.forEach((ele, idx) => {
-      refer_links.push({
+      const tmp_refer = {
         title: `${SerialNo}.${idx + 1}`,
         target: for_bookmark + `_refer_${SerialNo}_${idx + 1}`,
-      });
+      };
+      refer_links.push(tmp_refer);
+      all_refer_links.push(Object.assign({}, tmp_refer, { text: ele }));
     });
 
     return getRow({
@@ -49,7 +56,16 @@ function getDataRows() {
           alignment: "left",
           target: for_bookmark,
         }),
-        getCell({ title: item.Result, alignment: "center", style: "red_mark" }),
+        new TableCell({
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              style: "red_mark",
+              children: [getFormattedConclusion(item.Result, false)],
+            }),
+          ],
+        }),
         getLinkCell({
           cellType: "normal",
           alignment: "center",
@@ -67,7 +83,7 @@ function getDataRows() {
   });
 }
 
-function geSummaryTable() {
+function getSummaryTable() {
   return new Table({
     width: {
       size: 100,
@@ -129,7 +145,8 @@ function geSummaryTable() {
             columnSpan: 3,
             children: [
               new Paragraph({
-                children: getFormattedConclusion(d.Result),
+                children: getFormattedConclusion(d.Result, true),
+                alignment: AlignmentType.CENTER,
               }),
             ],
           }),
@@ -139,4 +156,95 @@ function geSummaryTable() {
   });
 }
 
-module.exports = geSummaryTable;
+function getSAPSummary() {
+  const sap_rows = all_sap_links.map((item) => {
+    return getRow({
+      children: [
+        getLinkCell({
+          width: 500,
+          title: item.title,
+          cellType: "normal",
+          alignment: "center",
+          target: item.target,
+        }),
+        getCell({
+          title: item.text,
+        }),
+      ],
+    });
+  });
+
+  return new Table({
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: table_config.tableMargin,
+    rows: [
+      getRow({
+        children: [
+          getCell({
+            title: "Special Attention Point Summary",
+            cols: 2,
+            cellType: "header",
+            alignment: "center",
+          }),
+        ],
+      }),
+      ...sap_rows,
+    ],
+  });
+}
+
+function getReferSummary() {
+  const refer_rows = all_refer_links.map((item) => {
+    return getRow({
+      children: [
+        getLinkCell({
+          width: 500,
+          title: item.title,
+          cellType: "normal",
+          alignment: "center",
+          target: item.target,
+        }),
+        getCell({
+          title: item.text,
+        }),
+      ],
+    });
+  });
+
+  return new Table({
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: table_config.tableMargin,
+    rows: [
+      getRow({
+        children: [
+          getCell({
+            title: "Reference Note Summary",
+            cols: 2,
+            cellType: "header",
+            alignment: "center",
+          }),
+        ],
+      }),
+      ...refer_rows,
+    ],
+  });
+}
+
+const SUMMARY_Tables = [getSummaryTable()];
+if (all_sap_links.length) {
+  SUMMARY_Tables.push(new Paragraph(""));
+  SUMMARY_Tables.push(getSAPSummary());
+}
+
+if (all_refer_links.length) {
+  SUMMARY_Tables.push(new Paragraph(""));
+  SUMMARY_Tables.push(getReferSummary());
+}
+
+module.exports = SUMMARY_Tables;

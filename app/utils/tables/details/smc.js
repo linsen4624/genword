@@ -1,4 +1,10 @@
-const { Table, WidthType, Paragraph, BorderStyle } = require("docx");
+const {
+  Table,
+  WidthType,
+  Paragraph,
+  BorderStyle,
+  convertInchesToTwip,
+} = require("docx");
 const d = require("../../reportData.json");
 const {
   getRow,
@@ -75,6 +81,7 @@ function getSMCTable() {
       getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(5.31),
             title: `${sn + 1}. ${subTitle}`,
             cellType: "subheader",
             alignment: "left",
@@ -82,6 +89,7 @@ function getSMCTable() {
             cols: 3,
           }),
           getCell({
+            width: convertInchesToTwip(1.69),
             title: result,
             alignment: "center",
             style: "red_mark",
@@ -91,12 +99,18 @@ function getSMCTable() {
       getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(0.88),
             title: "Description",
             cellType: "normal",
             alignment: "center",
             gray_bg: true,
           }),
-          getCell({ title: desp, cols: 3, gray_bg: true }),
+          getCell({
+            width: convertInchesToTwip(6.12),
+            title: desp,
+            cols: 3,
+            gray_bg: true,
+          }),
         ],
       }),
       getRow({

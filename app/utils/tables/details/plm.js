@@ -1,4 +1,10 @@
-const { Table, WidthType, Paragraph, BorderStyle } = require("docx");
+const {
+  Table,
+  WidthType,
+  Paragraph,
+  BorderStyle,
+  convertInchesToTwip,
+} = require("docx");
 const d = require("../../reportData.json");
 const {
   getRow,
@@ -34,6 +40,7 @@ function getCheckLists() {
           alignment: "center",
         }),
         getCell({
+          width: convertInchesToTwip(3.29),
           borders: {
             right: {
               style: BorderStyle.NONE,
@@ -45,6 +52,7 @@ function getCheckLists() {
           alignment: "left",
         }),
         getCell({
+          width: convertInchesToTwip(0.84),
           borders: {
             left: {
               style: BorderStyle.NONE,
@@ -75,6 +83,7 @@ function getPLMTable() {
       getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(5.31),
             title: `${sn + 1}. ${subTitle}`,
             cellType: "subheader",
             alignment: "left",
@@ -82,6 +91,7 @@ function getPLMTable() {
             cols: 3,
           }),
           getCell({
+            width: convertInchesToTwip(1.69),
             title: result,
             alignment: "center",
             style: "red_mark",
@@ -91,12 +101,18 @@ function getPLMTable() {
       getRow({
         children: [
           getCell({
+            width: convertInchesToTwip(0.88),
             title: "Description",
             cellType: "normal",
             alignment: "center",
             gray_bg: true,
           }),
-          getCell({ title: desp, cols: 3, gray_bg: true }),
+          getCell({
+            width: convertInchesToTwip(6.12),
+            title: desp,
+            cols: 3,
+            gray_bg: true,
+          }),
         ],
       }),
       getRow({
