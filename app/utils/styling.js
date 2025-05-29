@@ -1,5 +1,7 @@
 const { AlignmentType, convertMillimetersToTwip } = require("docx");
 
+const upzip_target_path = "images/ReportPhoto";
+
 const Colors = {
   gray: "f2f2f2",
   pink: "e5b7b7",
@@ -105,4 +107,4 @@ const styling = {
   ],
 };
 
-module.exports = { Colors, styling, table_config };
+module.exports = { Colors, styling, table_config, upzip_target_path };

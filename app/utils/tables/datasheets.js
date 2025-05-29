@@ -162,7 +162,7 @@ function getWithPicDatasheet(data) {
         children: [
           getImageCell({
             type: "png",
-            path: `images${data.photo.url}`,
+            path: data.photo.url,
             size: { w: 325, h: 250 },
             cols: 4,
           }),
@@ -440,7 +440,7 @@ function getShoesDatasheet(data) {
           children: [
             getImageCell({
               type: "jpg",
-              path: `images${pic.url}`,
+              path: pic.url,
               // size: { w: 325, h: 250 },
               size: { w: 470, h: 340 },
             }),

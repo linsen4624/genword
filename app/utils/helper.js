@@ -20,7 +20,8 @@ const {
   Table,
 } = require("docx");
 const fs = require("fs");
-const { Colors, table_config } = require("./styling");
+const { Colors, table_config, upzip_target_path } = require("./styling");
+const d = require("../utils/reportData");
 
 const for_header = {
   fill: Colors.pink,
@@ -229,13 +230,11 @@ function getImageCell(para) {
     children: [
       new Paragraph({
         children: [
-          new ImageRun({
+          getImage({
             type: para.type,
-            data: fs.readFileSync(para.path),
-            transformation: {
-              width: para.size.w,
-              height: para.size.h,
-            },
+            path: para.path,
+            size: { w: para.size.w, h: para.size.h },
+            altText: "No Photo Found",
           }),
         ],
         alignment: AlignmentType.CENTER,
@@ -334,22 +333,6 @@ function getPhotosTable(pg) {
   const photos = pg.photos || pg;
   const len = photos?.length || 0;
   if (len <= 0) return;
-  const photo_prefix = "images";
-  const setPhoto = (p) => {
-    return p && p !== ""
-      ? new ImageRun({
-          type: "jpg",
-          data: fs.readFileSync(photo_prefix + p),
-          transformation: {
-            width: 325,
-            height: 250,
-            // width: 236,
-            // height: 170,
-          },
-        })
-      : new TextRun("NA");
-  };
-
   const photoRows = [];
   if (pg.name && pg.name !== "") {
     photoRows.push(
@@ -379,7 +362,14 @@ function getPhotosTable(pg) {
       new TableCell({
         children: [
           new Paragraph({
-            children: [setPhoto(item.url)],
+            children: [
+              getImage({
+                type: "jpg",
+                path: item.url,
+                size: { w: 325, h: 250 },
+                altText: "No Photo Found",
+              }),
+            ],
             alignment: AlignmentType.CENTER,
           }),
         ],
@@ -539,6 +529,33 @@ function getFormattedConclusion(resultStr, isConclusion) {
   });
 }
 
+/**
+ * @function getImage
+ * @param {para}
+ ** @return {Object}
+ */
+
+function getImage(para) {
+  const image_path = `${upzip_target_path}/${getCleanedString(d.ReportNo)}${
+    para.path
+  }`;
+  const alter_text = para.altText || "NA";
+  let img = null;
+  try {
+    img = new ImageRun({
+      type: para.type,
+      data: fs.readFileSync(image_path),
+      transformation: {
+        width: para.size.w,
+        height: para.size.h,
+      },
+    });
+  } catch (e) {
+    img = new TextRun(alter_text);
+  }
+  return img;
+}
+
 module.exports = {
   getRow,
   getCell,
@@ -550,4 +567,5 @@ module.exports = {
   getShortString,
   getFormattedTextArray,
   getFormattedConclusion,
+  getImage,
 };

@@ -15,3 +15,5 @@ typings/
 .nyc_output/
 images/
 app/public/upload/
+app/public/zips/
+app/public/words/

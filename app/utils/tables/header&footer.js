@@ -18,6 +18,7 @@ const {
 } = require("docx");
 const fs = require("fs");
 const { Colors } = require("../styling");
+const { getImage } = require("../helper");
 const d = require("../reportData.json");
 
 const signature = new Table({
@@ -56,13 +57,11 @@ const signature = new Table({
           children: [
             new Paragraph({
               children: [
-                new ImageRun({
+                getImage({
                   type: "jpg",
-                  data: fs.readFileSync(`images${d.SupervisorSignPhotoUrl}`),
-                  transformation: {
-                    width: 78,
-                    height: 48,
-                  },
+                  path: d.SupervisorSignPhotoUrl,
+                  size: { w: 78, h: 48 },
+                  altText: "No Photo Found",
                 }),
               ],
             }),

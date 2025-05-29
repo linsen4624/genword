@@ -12,6 +12,7 @@
     "InspectionDate": "2025-03-31",
     "Location": "Fuzhou City, China",
     "InspectionBasis": "HF-GID-MT-GWI-HG-HG-06-116-F-200505FZ0008",
+    "photosPackageURL": "http://localhost:7001/public/zips/test.zip",
     "ProductPhotos": [
         {
             "url": "/photo/00. First page photos(No naming required)/24 Item Decor books.jpg",

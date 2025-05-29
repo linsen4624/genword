@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append("jsonFile", file);
 
     try {
-      const response = await fetch("/uploadJSON", {
+      const response = await fetch("/api/uploadJSON", {
         method: "POST",
         body: formData,
       });

@@ -4,12 +4,12 @@ const {
   convertMillimetersToTwip,
   TableRow,
   TableCell,
-  ImageRun,
   Paragraph,
+  VerticalAlign,
+  AlignmentType,
 } = require("docx");
-const fs = require("fs");
 const d = require("../reportData.json");
-const { getRow, getCell, getShortString } = require("../helper");
+const { getRow, getCell, getShortString, getImage } = require("../helper");
 const { table_config } = require("../styling");
 
 function getInfoTable() {
@@ -157,36 +157,36 @@ function getPictureTable() {
               size: convertMillimetersToTwip(89),
               type: WidthType.DXA,
             },
+            verticalAlign: VerticalAlign.CENTER,
             children: [
               new Paragraph({
+                alignment: AlignmentType.CENTER,
                 children: [
-                  new ImageRun({
+                  getImage({
                     type: "jpg",
-                    data: fs.readFileSync(`images${imgs[0].url}`),
-                    transformation: {
-                      width: 325,
-                      height: 250,
-                    },
+                    path: imgs[0].url,
+                    size: { w: 325, h: 250 },
+                    altText: "No Photo Found",
                   }),
                 ],
               }),
             ],
           }),
           new TableCell({
+            verticalAlign: VerticalAlign.CENTER,
             width: {
               size: convertMillimetersToTwip(89),
               type: WidthType.DXA,
             },
             children: [
               new Paragraph({
+                alignment: AlignmentType.CENTER,
                 children: [
-                  new ImageRun({
+                  getImage({
                     type: "jpg",
-                    data: fs.readFileSync(`images${imgs[1].url}`),
-                    transformation: {
-                      width: 325,
-                      height: 250,
-                    },
+                    path: imgs[1].url,
+                    size: { w: 325, h: 250 },
+                    altText: "No Photo Found",
                   }),
                 ],
               }),
