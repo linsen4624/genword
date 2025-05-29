@@ -1,7 +1,5 @@
 const { Controller } = require("egg");
 const fs = require("fs");
-const path = require("path");
-const pump = require("mz-modules/pump");
 const AdmZip = require("adm-zip");
 const json_target_path = "app/utils/";
 const { upzip_target_path } = require("../utils/styling");
@@ -10,24 +8,23 @@ const { getCleanedString } = require("../utils/helper");
 class AppController extends Controller {
   async process_report() {
     const { ctx } = this;
-    const stream = await ctx.getFileStream();
-    if (!fs.existsSync(json_target_path)) fs.mkdirSync(json_target_path);
+    const json_data = ctx.request.body;
+    const zip_file_path = json_data.photosPackageURL;
+    const report_no = json_data.ReportNo;
 
-    let filename = encodeURIComponent(stream.filename);
-    const extname = path.extname(filename);
-    filename = "reportData" + extname;
-    const target = path.join(this.config.baseDir, json_target_path, filename);
-    const writeStream = fs.createWriteStream(target);
-    await pump(stream, writeStream);
-    const d = fs.readFileSync(target);
-    const data = JSON.parse(d);
+    fs.writeFileSync(
+      json_target_path + "reportData.json",
+      JSON.stringify(json_data, null, 2),
+      "utf8"
+    );
 
-    if (data.photosPackageURL) {
+    if (zip_file_path !== "") {
       try {
-        const result = await ctx.curl(data.photosPackageURL, {
+        const result = await ctx.curl(zip_file_path, {
           dataType: "buffer",
           timeout: 10000,
         });
+
         if (result.status !== 200) {
           throw new Error(
             `Failed to download zip file. HTTP Status: ${result.status}`
@@ -40,8 +37,9 @@ class AppController extends Controller {
         }
 
         const zip = new AdmZip(zipBuffer);
+        if (!fs.existsSync(upzip_target_path)) fs.mkdirSync(upzip_target_path);
         zip.extractAllTo(
-          `${upzip_target_path}/${getCleanedString(data.ReportNo)}`,
+          `${upzip_target_path}/${getCleanedString(report_no)}`,
           true
         );
       } catch (e) {

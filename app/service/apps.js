@@ -82,7 +82,7 @@ class AppService extends Service {
       const host = "http://127.0.0.1:7001/";
       const word_path = host + "public/words/" + word_name;
 
-      return { result: "success", wordUrl: word_path };
+      return { success: true, wordUrl: word_path };
     } catch (error) {
       console.log("Error:", error);
       return {

@@ -1,0 +1,720 @@
+// test/app.test.js
+
+const { strict: assert } = require("node:assert");
+const { app } = require("egg-mock/bootstrap");
+
+const requestBody = {
+  ReportNo: " H25037329NL-A1",
+  Client: "Reet Krause",
+  Supplier: "Fuzhou Yintuan Printing Co.,ltd",
+  Factory: "Fuzhou Yintuan Printing Co.,ltd",
+  PoNo: "NA",
+  ItemNo: "Decor books",
+  ShipmentQty: 600,
+  ProductDescription: "Decor books",
+  InspectionType: "Pre-shipment Inspection",
+  Sequence: "Original Inspection",
+  InspectionDate: "2025-03-31",
+  Location: "Fuzhou City, China",
+  InspectionBasis: "HF-GID-MT-GWI-HG-HG-06-116-F-200505FZ0008",
+  photosPackageURL: "http://localhost:7001/public/zips/test.zip",
+  ProductPhotos: [
+    {
+      url: "/photo/00. First page photos(No naming required)/24 Item Decor books.jpg",
+      description: "",
+    },
+    {
+      url: "/photo/00. First page photos(No naming required)/25 Item Decor books.jpg",
+      description: "",
+    },
+  ],
+  SupervisorSignPhotoUrl: "/photo/SupervisorSignPhoto.jpg",
+  ApprovedDate: "2025-03-31",
+  samplingStandard: "ISO2859.1",
+  samplingPlan: "Single, Normal",
+  inspectionLevel: "G-II",
+  "Critical-AQL": 0,
+  "Major-AQL": 2.5,
+  "Minor-AQL": 4.0,
+  "Critical-SampleSize": "80",
+  "Major-SampleSize": "80",
+  "Minor-SampleSize": "80",
+  PackagingUnit: "Carton",
+  ProductUnit: "Set",
+  Result: "Conformed",
+  Inspector: "2013042201",
+  Auditor: "2009022501",
+  DocNo: "IRT-1545",
+  DocVersion: "4.0",
+  DefectsTotal: null,
+  POItems: [
+    {
+      PONo: "NA",
+      ItemNo: "Decor books",
+      POQty: 600,
+      ShipmentQtyOfPackage: 75,
+      ShipmentQtyOfProduct: 600,
+      PackedQtyOfPackage: 75,
+      PackedQtyOfProduct: 600,
+      SampleCartonCounts: 9,
+      SampleSize: 80,
+      DefectsList: [
+        {
+          defectName: "Crack mark on box",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Dent mark on book",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Bubble mark on surface",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Slight poor printing on surface",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Wrinkle mark on box",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+      ],
+      DefectsTotal: {
+        TotalCriticalDefectsFounded: 0,
+        TotalMajorDefectsFounded: 1,
+        TotalMinorDefectsFounded: 6,
+        AllowedCriticalDefects: 0,
+        AllowedMajorDefects: 5,
+        AllowedMinorDefects: 7,
+      },
+    },
+    {
+      PONo: "NA",
+      ItemNo: "Decor books1",
+      POQty: 500,
+      ShipmentQtyOfPackage: 65,
+      ShipmentQtyOfProduct: 100,
+      PackedQtyOfPackage: 15,
+      PackedQtyOfProduct: 600,
+      SampleCartonCounts: 9,
+      SampleSize: 90,
+      DefectsList: [
+        {
+          defectName: "Crack mark on box",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Dent mark on book",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Bubble mark on surface",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Slight poor printing on surface",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+        {
+          defectName: "Wrinkle mark on box",
+          CriticaldefectFounded: 0,
+          MajorDefectFounded: 1,
+          MinorDefectFounded: 0,
+        },
+      ],
+      DefectsTotal: {
+        TotalCriticalDefectsFounded: 0,
+        TotalMajorDefectsFounded: 1,
+        TotalMinorDefectsFounded: 6,
+        AllowedCriticalDefects: 0,
+        AllowedMajorDefects: 5,
+        AllowedMinorDefects: 7,
+      },
+    },
+  ],
+  InspectionCategories: [
+    {
+      CategoryName: "Quantity",
+      checklist: [],
+      datasheet: [],
+      SpecialAttention: [],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [
+        {
+          name: "",
+          photos: [
+            {
+              url: "/photo/01. Quantity & Warehouse & Storage(No naming required)/IMG_20250331_100507.jpg",
+              description: "1",
+            },
+            {
+              url: "/photo/01. Quantity & Warehouse & Storage(No naming required)/IMG_20250331_100519.jpg",
+              description: "2",
+            },
+          ],
+        },
+      ],
+      Result: "Conformed",
+    },
+    {
+      CategoryName: "Workmanship",
+      checklist: [
+        {
+          code: "TGS001",
+          name: "Label check",
+          Criteria: "Label and marking meets the specifications and/or claims.",
+          SampleSize: "",
+          Result: "",
+        },
+        {
+          code: "TGS002",
+          name: "Function test",
+          Criteria: "With all intended functions.",
+          SampleSize: "",
+          Result: "",
+        },
+      ],
+      datasheet: [],
+      SpecialAttention: [],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [
+        {
+          name: "01 Item Decor books",
+          photos: [
+            {
+              url: "/photo/02. Workmanship（No naming required)/01 Item Decor books/1 crack mark on box-ma/1 crack mark on box-ma 1.jpg",
+              description: "crack mark on box-ma 1",
+            },
+            {
+              url: "/photo/02. Workmanship（No naming required)/01 Item Decor books/2 dent mark on book-mi/2 dent mark on book-mi 1.jpg",
+              description: "dent mark on book-mi 1",
+            },
+            {
+              url: "/photo/02. Workmanship（No naming required)/01 Item Decor books/2 dent mark on book-mi/2 dent mark on book-mi 2.jpg",
+              description: "dent mark on book-mi 2",
+            },
+          ],
+        },
+      ],
+      Result: "Conformed",
+    },
+    {
+      CategoryName: "OnSiteTest",
+      checklist: [
+        {
+          code: "TGS003",
+          name: "Rub test ",
+          Criteria:
+            "Rub marking/printing by hand with cloth soaked with water for 15 s ...  ",
+          SampleSize: "5",
+          mesurementType: "qualitative",
+          mesurementData: [],
+          Result: "Conformed",
+        },
+        {
+          code: "TGS004",
+          name: "Mass per unit area of material",
+          Criteria: "Mass per unit area of material, by weighting .... ",
+          SampleSize: "6",
+          mesurementType: "qualitative",
+          mesurementData: [],
+          Result: "Conformed",
+        },
+        {
+          code: "TGS005",
+          name: "tape test ",
+          Criteria: "Paste and cover printing on product surface .... ",
+          SampleSize: "9",
+          mesurementType: "qualitative",
+          mesurementData: [],
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [],
+      SpecialAttention: [
+        "The mass per unit area of paper was not conducted because the product was not allowed to be destroyed. ",
+      ],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [
+        "For tape test of logo, the surface printing was slightly peeled off, as photos:  ",
+      ],
+      ReferenceNotePhotos: [
+        {
+          url: "/photo/03. On Site Test（naming required)/Reference Note/1 3.1 after test.jpg",
+          description: "1 3.1 after test",
+        },
+        {
+          url: "/photo/03. On Site Test（naming required)/Reference Note/2 3.1 after test.jpg",
+          description: "2 3.1 after test",
+        },
+      ],
+      PhotoGroup: [],
+      Result: "Conformed",
+    },
+    {
+      CategoryName: "ProductDimensions & Weight",
+      checklist: [
+        {
+          code: "TGS010",
+          name: "Dimension of product",
+          Criteria: "",
+          SampleSize: "5",
+          Result: "Conformed",
+        },
+        {
+          code: "TGS011",
+          name: "Weight of product ",
+          Criteria: "",
+          SampleSize: "5",
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [
+        {
+          name: "Dimension of product(cm)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "Matte paper size 6x8",
+              Tolerance: "-",
+              Result: "6*[10],6*8",
+            },
+            {
+              ItemNo: "Decor books ",
+              Specification: "Over size 146x216x25& (210x148) ",
+              Tolerance: "",
+              Result: "148*[217]*16,148*[216]*16",
+            },
+          ],
+        },
+        {
+          name: " Weight of product (g)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "-",
+              Tolerance: "-",
+              Result: "445.8,[489],440",
+            },
+            {
+              ItemNo: "Decor books ",
+              Specification: "-",
+              Tolerance: "",
+              Result: "441.8,445,390",
+            },
+          ],
+        },
+        {
+          name: " ShoesMeasurment",
+          type: "ShoesDataSheet",
+          datas: [
+            {
+              photos: [
+                {
+                  url: "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154150.jpg",
+                  description: "1",
+                },
+                {
+                  url: "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154159.jpg",
+                  description: "2",
+                },
+              ],
+            },
+            {
+              ItemNo: "Decor books AA",
+              photos: [
+                {
+                  url: "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154150.jpg",
+                  description: "1",
+                },
+                {
+                  url: "/photo/04. Product Dimension & Weight（no naming required)/Big Photo/IMG_20250403_154159.jpg",
+                  description: "2",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "WithPicDataSheet XXXX",
+          type: "WithPicDataSheet",
+          ItemNo: "Decor books ",
+          photo: {
+            url: "/photo/03. On Site Test（naming required)/img3.png",
+            description: "2",
+          },
+          datas: [
+            {
+              Checkpoint: "Decor books ",
+              Specification: "93",
+              Tolerance: "-",
+              Result: "445.8,[489],440",
+            },
+            {
+              Checkpoint: "Decor books ",
+              Specification: "95",
+              Tolerance: "",
+              Result: "441.8,445,390",
+            },
+          ],
+        },
+      ],
+      SpecialAttention: [
+        "No excess product for thickness of grey board test during inspection",
+        "ProductWeight SAP content",
+      ],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [
+        {
+          url: "/photo/03. On Site Test（naming required)/Reference Note/1 3.1 after test.jpg",
+          description: "1 3.1 after test",
+        },
+        {
+          url: "/photo/03. On Site Test（naming required)/Reference Note/2 3.1 after test.jpg",
+          description: "2 3.1 after test",
+        },
+      ],
+      PhotoGroup: [],
+      Result: "Conformed",
+    },
+    {
+      CategoryName: "Style / Material/ Construction",
+      checklist: [
+        {
+          code: "TGS015",
+          name: "Product Style, Material, Construction",
+          Criteria: "",
+          SampleSize: "",
+          Result: "Conformed",
+        },
+        {
+          code: "TGS016",
+          name: "Additional comments on product specifications",
+          Criteria: "",
+          SampleSize: "",
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [
+        {
+          name: "CDF",
+          type: "CDFDataSheet",
+          ItemNo: "Decor books ",
+          Model: "MXXXX",
+          ReportNo: "REP11111",
+          datas: [
+            {
+              ComponentName: "A",
+              OnCDF: "13532546547",
+              Findings: "13[532]546547",
+              Result: "Conformed",
+            },
+            {
+              ComponentName: "B",
+              OnCDF: "13532546547",
+              Findings: "1353254[6]547",
+              Result: "Conformed",
+            },
+          ],
+        },
+      ],
+      SpecialAttention: [],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [],
+      Result: "Conformed",
+    },
+    {
+      CategoryName: "Product Color",
+      Result: "Conformed",
+      checklist: [
+        {
+          code: "TGS017",
+          name: "Color Check",
+          Criteria: "",
+          SampleSize: "",
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [],
+      SpecialAttention: [],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [],
+    },
+    {
+      CategoryName: "Product Label / Marking",
+      Result: "Conformed",
+      checklist: [
+        {
+          code: "TGS018",
+          name: "Logo, Labels, Marking, Tag",
+          Criteria: "",
+          SampleSize: "All samples",
+          Result: "Pending",
+        },
+        {
+          code: "TGS019",
+          name: "Readability test for Barcode,QR code",
+          Criteria: "",
+          SampleSize: "5",
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [
+        {
+          name: "BarCode Test",
+          type: "BarCodeDataSheet",
+          ItemNo: "Decor books ",
+          Color: "red",
+          Size: "65x90",
+          datas: [
+            {
+              Position: "A",
+              Specification: "13532546547",
+              Findings: "13532546547",
+              Result: "Conformed",
+            },
+            {
+              Position: "B",
+              Specification: "13532546547",
+              Findings: "13532546547[11]",
+              Result: "Not Conformed",
+            },
+          ],
+        },
+      ],
+      SpecialAttention: [
+        "Actual found the barcode label with “Made In China” on color box which was different from spec., detail as below photos.",
+      ],
+      SpecialAttentionPhotos: [
+        {
+          url: "/photo/07.  Product Label & Marking（No naming required)/Special Attention Point/1 7.1 spec.jpg",
+          description: "1 7.1 spec",
+        },
+        {
+          url: "/photo/07.  Product Label & Marking（No naming required)/Special Attention Point/2 7.1 actually found.jpg",
+          description: "2 7.1 actually found",
+        },
+      ],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [],
+    },
+    {
+      CategoryName: "Shipping Mark",
+      Result: "Conformed",
+      checklist: [
+        {
+          code: "TGS020",
+          name: "Shipping Marks",
+          Criteria: "",
+          SampleSize: "all samples",
+          Result: "Conformed",
+        },
+        {
+          code: "TGS021",
+          name: "Labels, Markings on outer packing",
+          Criteria: "",
+          SampleSize: "all samples",
+          Result: "Conformed",
+        },
+      ],
+      datasheet: [],
+      SpecialAttention: [],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [],
+    },
+    {
+      CategoryName: "Packing / Packaging",
+      Result: "Conformed",
+      checklist: [
+        {
+          code: "TGS022",
+          name: "Dimension of color box",
+          Criteria: "",
+          SampleSize: "1 box",
+          Result: "Conformed",
+        },
+        {
+          code: "TGS023",
+          name: "Weight of color box",
+          Criteria: "",
+          SampleSize: "1 box",
+          Result: "Conformed",
+        },
+        {
+          code: "TGS024",
+          name: "Dimension of export carton",
+          Criteria: "",
+          SampleSize: "1 carton",
+          Result: "Pending",
+        },
+        {
+          code: "TGS025",
+          name: "Gross Weight of export carton",
+          Criteria: "",
+          SampleSize: "1 carton",
+          Result: "Pending",
+        },
+      ],
+      datasheet: [
+        {
+          name: "Dimension of export carton(cm)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "53.8x37.8x25.4",
+              Tolerance: "+/-5%",
+              Result: "55x39x[23.5]",
+            },
+          ],
+        },
+        {
+          name: "Gross Weight of export carton(kg)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "14.4",
+              Tolerance: "+/-10%",
+              Result: "[13.08]",
+            },
+          ],
+        },
+        {
+          name: "Color box dimension check (cm)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "-",
+              Tolerance: "-",
+              Result: "25.5x16.7x9.5",
+            },
+          ],
+        },
+        {
+          name: "Color box weight check (kg)",
+          type: "NormalDatasheet",
+          datas: [
+            {
+              ItemNo: "Decor books ",
+              Specification: "-",
+              Tolerance: "-",
+              Result: "1.53",
+            },
+          ],
+        },
+      ],
+      SpecialAttention: [
+        "Actual found the carton gross weight and carton dimension was out of specification, details refer to as below data sheet with red marking. ",
+      ],
+      SpecialAttentionPhotos: [],
+      ReferenceNote: [],
+      ReferenceNotePhotos: [],
+      PhotoGroup: [],
+    },
+  ],
+  OtherNotes: [
+    "The inspection was conducted in accordance with the AQL standard. The inspection result is based on the sample size and the defects found during the inspection. The final decision on acceptance or rejection of the shipment should be made by the client.",
+    "The inspection was conducted in accordance with the AQL standard. The inspection result is based on the sample size and the defects found during the inspection. The final decision on acceptance or rejection of the shipment should be made by the client.",
+  ],
+  OtherNotesPhotos: [],
+  OtherPhotoGroup: [
+    {
+      name: "Decor books",
+      photos: [
+        {
+          url: "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/1 Item Decor books.jpg",
+          description: "1 Item Decor books",
+        },
+        {
+          url: "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/10 Item Decor books.jpg",
+          description: "10 Item Decor books",
+        },
+        {
+          url: "/photo/11. Other photos（Naming or no naming required)/01 Item Decor books/11 Item Decor books.jpg",
+          description: "11 Item Decor books",
+        },
+      ],
+    },
+    {
+      name: "test",
+      photos: [
+        {
+          url: "/photo/11. Other photos（Naming or no naming required)/02 test/1 barcode readability check.jpg",
+          description: "1 barcode readability check",
+        },
+        {
+          url: "/photo/11. Other photos（Naming or no naming required)/02 test/2 QR code check.jpg",
+          description: "2 QR code check",
+        },
+      ],
+    },
+  ],
+  AccountManagers: [
+    {
+      photo: "/photo/Eunice.jpg",
+      name: "Eunice Wu",
+      title: "Account Manager",
+      email: "wuyanmei@hqts.com",
+      skype: "yanmei00802",
+      mobile: "+31 6 12345678",
+    },
+    {
+      photo: "/photo/vicky.jpg",
+      name: "Vicky Wang",
+      title: "Dept Manager",
+      email: "vicky@hqts.com",
+      skype: "vickky346457",
+      mobile: "+31 6 12345678",
+    },
+  ],
+};
+
+describe("test/app/controller/app.test.js", () => {
+  // Test case for POST /api/resource with JSON body
+  it("should create a new resource with a JSON parameter", async () => {
+    const res = await app
+      .httpRequest()
+      .post("/api/generate-report") // Your API endpoint
+      .send(requestBody) // Send the JSON body
+      .type("application/json") // Set Content-Type header
+      .expect(200); // Expect HTTP status 200 Created
+
+    // Assertions
+    assert(res.body.success === true);
+  });
+});
