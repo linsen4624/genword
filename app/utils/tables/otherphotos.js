@@ -5,6 +5,8 @@ const { table_config } = require("../styling");
 
 const empty_paragraph = new Paragraph("");
 
+if (!d || Object.keys(d).length < 10) return;
+
 function getOPTable() {
   return new Table({
     width: {

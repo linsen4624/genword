@@ -434,7 +434,13 @@ function getPhotosTable(pg) {
  */
 
 function getCleanedString(str) {
-  return str.replace(/[^a-zA-Z0-9]/g, "");
+  if (str) {
+    if (str !== "") {
+      return str.replace(/[^a-zA-Z0-9]/g, "");
+    }
+    return str;
+  }
+  return "";
 }
 
 /**

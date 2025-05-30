@@ -13,6 +13,8 @@ const { getRow, getCell } = require("../helper");
 const { table_config } = require("../styling");
 const fixed_width = convertInchesToTwip(1.75);
 
+if (!d || Object.keys(d).length < 10) return;
+
 const Sign_Table = new Table({
   width: {
     size: 100,

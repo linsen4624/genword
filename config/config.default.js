@@ -40,6 +40,13 @@ module.exports = (appInfo) => {
       headerName: "x-csrf-token",
       cookieName: "csrfToken",
     },
+    domainWhiteList: ["https://apifox.com"],
+  };
+
+  config.cors = {
+    // origin: "*",
+    credentials: true,
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
   };
 
   return {

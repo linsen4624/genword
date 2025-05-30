@@ -18,7 +18,6 @@ const backcover = require("../utils/tables/backcover");
 class GenerateWordController extends Controller {
   async create() {
     const { ctx } = this;
-
     try {
       const doc = new Document({
         styles: styling,

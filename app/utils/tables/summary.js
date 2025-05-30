@@ -21,6 +21,8 @@ const sub_header_cell_width = convertInchesToTwip(2.75);
 const all_sap_links = [];
 const all_refer_links = [];
 
+if (!d || Object.keys(d).length < 10) return;
+
 function getDataRows() {
   const DataLists = d.InspectionCategories || [];
   return DataLists.map((item, index) => {

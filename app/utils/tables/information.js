@@ -12,6 +12,8 @@ const d = require("../reportData.json");
 const { getRow, getCell, getShortString, getImage } = require("../helper");
 const { table_config } = require("../styling");
 
+if (!d || Object.keys(d).length < 10) return;
+
 function getInfoTable() {
   const sub_header_cell_width = convertMillimetersToTwip(40.7);
   return new Table({

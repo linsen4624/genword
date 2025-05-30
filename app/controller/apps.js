@@ -4,6 +4,7 @@ const AdmZip = require("adm-zip");
 const json_target_path = "app/utils/";
 const { upzip_target_path } = require("../utils/styling");
 const { getCleanedString } = require("../utils/helper");
+const d = require("../utils/reportData.json");
 
 class AppController extends Controller {
   async process_report() {
@@ -46,7 +47,11 @@ class AppController extends Controller {
         ctx.body = { result: "error", msg: "cannot handle zip file" };
       }
 
-      ctx.body = await ctx.service.apps.generateWord();
+      if (d && Object.keys(d).length > 10) {
+        ctx.body = await ctx.service.apps.generateWord();
+      } else {
+        ctx.body = { result: "error", msg: "no data file found" };
+      }
     } else {
       ctx.body = { result: "error", msg: "no photo file found" };
     }

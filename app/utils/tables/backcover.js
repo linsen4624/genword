@@ -14,6 +14,8 @@ const { getCell } = require("../helper");
 
 const empty_paragraph = new Paragraph("");
 
+if (!d || Object.keys(d).length < 10) return;
+
 function getContractTable() {
   return new Table({
     borders: TableBorders.NONE,

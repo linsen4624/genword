@@ -21,6 +21,8 @@ const { Colors } = require("../styling");
 const { getImage } = require("../helper");
 const d = require("../reportData.json");
 
+if (!d || Object.keys(d).length < 10) return;
+
 const signature = new Table({
   width: {
     size: 100,

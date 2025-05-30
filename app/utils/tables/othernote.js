@@ -7,6 +7,8 @@ const empty_paragraph = new Paragraph("");
 const desp =
   "Some abnormal information may not affect the inspection conclusion according to stated requirements but be necessary to report for reference.";
 
+if (!d || Object.keys(d).length < 10) return;
+
 function getNoteLists() {
   return d.OtherNotes.map((item, index) => {
     return getRow({

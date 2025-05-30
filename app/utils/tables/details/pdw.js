@@ -1,5 +1,7 @@
 const { Table, WidthType, Paragraph, convertInchesToTwip } = require("docx");
 const d = require("../../reportData.json");
+if (!d || Object.keys(d).length < 10) return;
+
 const {
   getRow,
   getCell,

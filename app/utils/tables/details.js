@@ -10,6 +10,9 @@ const PLM_Table = require("./details/plm");
 const SM_Table = require("./details/shippingmark");
 const PP_Table = require("./details/pp");
 
+const d = require("../../utils/reportData.json");
+if (!d || Object.keys(d).length < 10) return;
+
 const Title_Table = new Table({
   width: {
     size: 100,
