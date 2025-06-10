@@ -9,12 +9,14 @@ const {
   VerticalAlign,
 } = require("docx");
 const fs = require("fs");
-const d = require("../reportData.json");
+const { json_target_path } = require("../styling");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
+if (!d || Object.keys(d).length < 10) return;
+
 const { getCell } = require("../helper");
 
 const empty_paragraph = new Paragraph("");
-
-if (!d || Object.keys(d).length < 10) return;
 
 function getContractTable() {
   return new Table({

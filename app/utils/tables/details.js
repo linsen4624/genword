@@ -10,7 +10,10 @@ const PLM_Table = require("./details/plm");
 const SM_Table = require("./details/shippingmark");
 const PP_Table = require("./details/pp");
 
-const d = require("../../utils/reportData.json");
+const fs = require("fs");
+const { json_target_path } = require("../styling");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
 if (!d || Object.keys(d).length < 10) return;
 
 const Title_Table = new Table({

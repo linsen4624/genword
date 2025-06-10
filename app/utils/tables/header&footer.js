@@ -16,11 +16,11 @@ const {
   InternalHyperlink,
   convertInchesToTwip,
 } = require("docx");
-const fs = require("fs");
-const { Colors } = require("../styling");
+const { Colors, json_target_path } = require("../styling");
 const { getImage } = require("../helper");
-const d = require("../reportData.json");
-
+const fs = require("fs");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
 if (!d || Object.keys(d).length < 10) return;
 
 const signature = new Table({

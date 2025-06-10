@@ -8,8 +8,8 @@ const {
   first_page_footer,
   first_page_header,
 } = require("../utils/tables/header&footer");
-const d = require("../utils/reportData");
-const { styling } = require("../utils/styling");
+
+const { styling, json_target_path } = require("../utils/styling");
 const information = require("../utils/tables/information");
 const summary = require("../utils/tables/summary");
 const details = require("../utils/tables/details");
@@ -23,6 +23,10 @@ const export_word_path = "app/public/words";
 class AppService extends Service {
   async generateWord() {
     try {
+      const new_json_content = fs.readFileSync(json_target_path, "utf8");
+      const d = JSON.parse(new_json_content);
+      if (!d || Object.keys(d).length < 10) return;
+
       const doc = new Document({
         styles: styling,
         sections: [
@@ -79,6 +83,7 @@ class AppService extends Service {
       const buf = await Packer.toBuffer(doc);
       const word_name = getCleanedString(d.ReportNo) + ".docx";
       fs.writeFileSync(`${export_word_path}/${word_name}`, buf);
+      fs.writeFileSync(json_target_path, "{}", "utf8");
       const host = "http://127.0.0.1:7001/";
       const word_path = host + "public/words/" + word_name;
 

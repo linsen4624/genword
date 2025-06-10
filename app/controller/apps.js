@@ -1,10 +1,8 @@
 const { Controller } = require("egg");
 const fs = require("fs");
 const AdmZip = require("adm-zip");
-const json_target_path = "app/utils/";
-const { upzip_target_path } = require("../utils/styling");
+const { upzip_target_path, json_target_path } = require("../utils/styling");
 const { getCleanedString } = require("../utils/helper");
-const d = require("../utils/reportData.json");
 
 class AppController extends Controller {
   async process_report() {
@@ -14,7 +12,7 @@ class AppController extends Controller {
     const report_no = json_data.ReportNo;
 
     fs.writeFileSync(
-      json_target_path + "reportData.json",
+      json_target_path,
       JSON.stringify(json_data, null, 2),
       "utf8"
     );
@@ -46,6 +44,9 @@ class AppController extends Controller {
       } catch (e) {
         ctx.body = { result: "error", msg: "cannot handle zip file" };
       }
+
+      const new_json_content = fs.readFileSync(json_target_path, "utf8");
+      const d = JSON.parse(new_json_content);
 
       if (d && Object.keys(d).length > 10) {
         ctx.body = await ctx.service.apps.generateWord();

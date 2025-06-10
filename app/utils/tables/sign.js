@@ -8,11 +8,13 @@ const {
   convertInchesToTwip,
   VerticalAlign,
 } = require("docx");
-const d = require("../reportData.json");
 const { getRow, getCell } = require("../helper");
-const { table_config } = require("../styling");
+const { table_config, json_target_path } = require("../styling");
 const fixed_width = convertInchesToTwip(1.75);
 
+const fs = require("fs");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
 if (!d || Object.keys(d).length < 10) return;
 
 const Sign_Table = new Table({

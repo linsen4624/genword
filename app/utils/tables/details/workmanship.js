@@ -1,6 +1,12 @@
-const { Table, WidthType, Paragraph, convertInchesToTwip } = require("docx");
-const d = require("../../reportData.json");
-if (!d || Object.keys(d).length < 10) return;
+const {
+  Table,
+  WidthType,
+  Paragraph,
+  convertInchesToTwip,
+  TableRow,
+  TableCell,
+  TableBorders,
+} = require("docx");
 
 const {
   getRow,
@@ -9,7 +15,11 @@ const {
   getPhotosTable,
   getCleanedString,
 } = require("../../helper");
-const { table_config } = require("../../styling");
+const { table_config, json_target_path } = require("../../styling");
+const fs = require("fs");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
+if (!d || Object.keys(d).length < 10) return;
 
 const empty_paragraph = new Paragraph("");
 const sn = 1;
@@ -231,8 +241,9 @@ function getDefectPhotos() {
   return defect_photo_table;
 }
 
-function getWSTable() {
+function getPartOne() {
   return new Table({
+    borders: { bottom: { style: "none" } },
     width: {
       size: 100,
       type: WidthType.PERCENTAGE,
@@ -252,7 +263,6 @@ function getWSTable() {
           getCell({
             width: convertInchesToTwip(1.69),
             title: result,
-            cols: 2,
             alignment: "center",
             style: "red_mark",
           }),
@@ -261,7 +271,7 @@ function getWSTable() {
       getRow({
         children: [
           getCell({
-            width: convertInchesToTwip(0.88),
+            width: convertInchesToTwip(0.98),
             title: "Description",
             cellType: "normal",
             alignment: "left",
@@ -270,11 +280,24 @@ function getWSTable() {
           getCell({
             width: convertInchesToTwip(6.12),
             title: desp,
-            cols: 5,
             gray_bg: true,
+            cols: 4,
           }),
         ],
       }),
+    ],
+  });
+}
+
+function getPartTwo() {
+  return new Table({
+    borders: { bottom: { style: "none" } },
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: table_config.tableMargin,
+    rows: [
       getRow({
         children: [
           getCell({
@@ -350,7 +373,6 @@ function getWSTable() {
           }),
         ],
       }),
-
       getRow({
         children: [
           getCell({
@@ -387,7 +409,34 @@ function getWSTable() {
           }),
         ],
       }),
-      ...getCheckLists(),
+    ],
+  });
+}
+
+function getPartThree() {
+  return new Table({
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    margins: table_config.tableMargin,
+    rows: getCheckLists(),
+  });
+}
+
+function getWSTable() {
+  return new Table({
+    borders: TableBorders.NONE,
+    width: {
+      size: 100,
+      type: WidthType.PERCENTAGE,
+    },
+    rows: [
+      new TableRow({ children: [new TableCell({ children: [getPartOne()] })] }),
+      new TableRow({ children: [new TableCell({ children: [getPartTwo()] })] }),
+      new TableRow({
+        children: [new TableCell({ children: [getPartThree()] })],
+      }),
     ],
   });
 }

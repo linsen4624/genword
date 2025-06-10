@@ -20,8 +20,14 @@ const {
   Table,
 } = require("docx");
 const fs = require("fs");
-const { Colors, table_config, upzip_target_path } = require("./styling");
-const d = require("../utils/reportData");
+const {
+  Colors,
+  table_config,
+  upzip_target_path,
+  json_target_path,
+} = require("./styling");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
 
 const for_header = {
   fill: Colors.pink,

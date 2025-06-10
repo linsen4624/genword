@@ -5,8 +5,6 @@ const {
   BorderStyle,
   convertInchesToTwip,
 } = require("docx");
-const d = require("../../reportData.json");
-if (!d || Object.keys(d).length < 10) return;
 
 const {
   getRow,
@@ -16,7 +14,11 @@ const {
   getCleanedString,
 } = require("../../helper");
 const getDataSheets = require("../datasheets");
-const { table_config } = require("../../styling");
+const { table_config, json_target_path } = require("../../styling");
+const fs = require("fs");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
+if (!d || Object.keys(d).length < 10) return;
 
 const empty_paragraph = new Paragraph("");
 const sn = 4;

@@ -1,13 +1,14 @@
 const { Table, WidthType, Paragraph } = require("docx");
-const d = require("../reportData.json");
 const { getRow, getCell, getPhotosTable } = require("../helper");
-const { table_config } = require("../styling");
+const { table_config, json_target_path } = require("../styling");
+const fs = require("fs");
+const new_json_content = fs.readFileSync(json_target_path, "utf8");
+const d = JSON.parse(new_json_content);
+if (!d || Object.keys(d).length < 10) return;
 
 const empty_paragraph = new Paragraph("");
 const desp =
   "Some abnormal information may not affect the inspection conclusion according to stated requirements but be necessary to report for reference.";
-
-if (!d || Object.keys(d).length < 10) return;
 
 function getNoteLists() {
   return d.OtherNotes.map((item, index) => {
